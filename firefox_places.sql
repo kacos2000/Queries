@@ -1,5 +1,6 @@
 -- https://developer.mozilla.org/en-US/docs/Mozilla/Tech/Places/Database
 -- https://developer.mozilla.org/en-US/docs/Mozilla/Tech/Places/Frecency_algorithm
+-- \AppData\Roaming\Mozilla\Firefox\Profiles\
 
 select
 moz_places.id as 'Id',

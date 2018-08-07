@@ -1,3 +1,5 @@
+-- \AppData\Roaming\Mozilla\Firefox\Profiles\
+
 select 
 moz_icons.id as 'IconId',
 moz_pages_w_icons.id as 'PageID',
@@ -8,7 +10,7 @@ moz_icons.icon_url as 'IconUrl',
 moz_icons.width as 'Width',
 moz_icons.root as 'Root',
 moz_icons.color as 'Color',
-case when moz_icons.expire_ms <> 0 then datetime(moz_icons.expire_ms/1000,'unixepoch') else '' end as 'Expire',
+case when moz_icons.expire_ms <> 0 then datetime(moz_icons.expire_ms/1000,'unixepoch','localtime') else '' end as 'Expire',
 hex(moz_icons.fixed_icon_url_hash) as 'IconHash',
 hex(moz_pages_w_icons.page_url_hash) as 'UrlHash'
 
