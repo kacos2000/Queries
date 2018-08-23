@@ -56,7 +56,6 @@ assets.owner as 'owner',
 hex(assets.serialized_data) as 'serial'
 
 from  Assets
-order by actual_size desc
 "
 
 1..1000 | %{write-progress -id 1 -activity "Running SQLite query" -status "$([string]::Format("Time Elapsed: {0:d2}:{1:d2}:{2:d2}", $elapsedTime.Elapsed.hours, $elapsedTime.Elapsed.minutes, $elapsedTime.Elapsed.seconds))" -percentcomplete ($_/100);}
@@ -79,7 +78,7 @@ $output = @(foreach ($item in $dbnresults ){$rn++
                   [PSCustomObject]@{
                                 ID = $item.ID 
                                 Key = $item.key
-                                Syb_Key = $item.syb_key
+                                Sub_Key = $item.sub_key
                                 Lock_Count = $item.lock_count
                                 AccessTime = $item.accesstime
                                 Actual_Size = $item.actual_size
