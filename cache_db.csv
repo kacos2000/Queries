@@ -1,4 +1,3 @@
-#TYPE System.Management.Automation.PSCustomObject
 "ID","Key","Syb_Key","Lock_Count","AccessTime","Actual_Size","Reserved_Size","Type","Owner","Serial"
 "3","uhttps://api.asm.skype.com/v1/objects/0-neu-d4-4768301b4c0bd774bdb01c4ea6f9c1d8",,"0","16 Jun 16 12:03:13 am","50839","50839","0","1","WW$CACHE/\\^CA29A099E60B8A322CF3F8E3044391913C271908518B901E63^pimgpsh_fullsize_distr.png		image/png??aW"
 "1","uhttps://api.asm.skype.com/v1/objects/0-neu-d4-4768301b4c0bd774bdb01c4ea6f9c1d8",,"0","16 Jun 16 12:03:02 am","6024","6024","0","1","\\$CACHE/\\^CA29A099E60B8A322CF3F8E3044391913C271908518B901E63^pimgpsh_thumbnail_win_distr.jpg
