@@ -27,7 +27,9 @@
              - 'media_cache_v3\asyncdb\cache_db' *(Cached Sent & Received images)* folders.<br>
                      
            - [PowerShell script/sqlite query](https://github.com/kacos2000/queries/blob/master/cache_db.ps1) so that you can view the Hex Blob output<br>
-             - [Sample Output (csv)](https://github.com/kacos2000/queries/blob/master/cache_db.csv)<br>
+             - [Sample Output (csv)](https://github.com/kacos2000/queries/blob/master/cache_db.csv)<br><br>
 
-      
-      
+
+
+       - **Google Drive**   <br>     
+             Query Google Drive's [snapshot.db](https://github.com/kacos2000/queries/blob/master/GDrive_snapshot.sql) found at the '%username%\AppData\Local\Google\Drive\user_default' folder  .<br>      
