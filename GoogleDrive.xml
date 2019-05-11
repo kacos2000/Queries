@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Artifacts version="2.0">
+  <Artifact type="SqliteArtifact" name="Google Drive Snapshot db" version="1.1" platform="Computer">
+    <Source type="FileName">snapshot.db</Source>
+    <Query>
+		select 
+			case cloud_entry.acl_role
+				when 2 then 'Can View'
+				when 1 then 'Can Contribute'
+				when 0 then 'Private'
+			else cloud_entry.acl_role 
+			end as 'aclrole',
+			case cloud_entry.doc_type
+				when 0 then 'Folder'
+				when 1 then 'File'
+				when 4 then 'Google Spreadsheet'
+				when 6 then 'Google Document'
+				when 12 then 'Google My Maps'
+				else cloud_entry.doc_type
+			end as 'doctype',
+			(select filename from cloud_entry where cloud_entry.doc_id = cloud_relations.parent_doc_id) as 'CloudParent',
+			cloud_entry.filename as 'CloudFilename',
+			cloud_entry.checksum as 'CloudMD5Hash',
+			datetime(cloud_entry.modified, 'unixepoch','localtime') as 'CloudModified',
+			cloud_entry.size as 'CloudSize',
+			cloud_entry.original_size as 'OriginalSize',
+			case cloud_entry.removed 
+				when 0 then 'No' 
+				when 1 then 'Yes' 
+			end as 'Removed' ,
+			case cloud_entry.shared 
+				when 0 then 'No' 
+				when 1 then 'Yes' 
+			end as 'Shared',
+			case local_entry.is_folder 
+				when 0 then 'No' 
+				when 1 then 'Yes' 
+			end as 'IsFolder',
+			(select filename from local_entry where local_entry.inode = local_relations.parent_inode) as 'LocalParent',
+			local_entry.filename as 'LocalFilename',
+			local_entry.size as 'LocalSize',
+			local_entry.checksum as 'LocalMD5Hash',
+			datetime(local_entry.modified, 'unixepoch','localtime') as 'LocalModified',
+			case 
+				when cloud_entry.checksum = local_entry.checksum 
+				then 'MD5 Match' 
+				else (case 
+						when cloud_entry.checksum notnull 
+						then 'No_Match'
+						else '' 
+					  end) 
+			end as 'MD5Check',
+			case 
+				when cloud_entry.modified = local_entry.modified 
+				then 'Dates Match' 
+				else 'No Match' 
+			end as 'CloudLocalDatesCheck',
+			case 
+				when local_entry.volume = volume_info.volume 
+				then volume_info.full_path||" - "||volume_info.device_type||" - Volume Name: ("||volume_info.label||")" 
+				else local_entry.volume 
+			end as 'Volume',
+			local_relations.child_volume as 'ChildVolume',
+			local_relations.parent_volume as 'ParentVolume'
+
+	from cloud_entry
+	join mapping on cloud_entry.doc_id = mapping.doc_id
+	join cloud_relations on cloud_entry.doc_id = cloud_relations.child_doc_id
+	join local_entry on local_entry.inode = mapping.inode
+	join local_relations on local_relations.child_inode = local_entry.inode
+	left join volume_info on volume_info.volume = local_entry.volume
+	
+    </Query>
+    <Fragments>
+	  <Fragment source="aclrole" alias="ACL Role" datatype="String" category="None" />
+	  <Fragment source="doctype" alias="Doc Type" datatype="String" category="None" />
+	  <Fragment source="CloudParent" alias="Cloud Parent Folder" datatype="String" category="None" />
+	  <Fragment source="CloudFilename" alias="Cloud Filename" datatype="String" category="None" />
+      <Fragment source="CloudMD5Hash" alias="Cloud MD5 Hash" datatype="String" category="None" />
+      <Fragment source="CloudModified" alias="Cloud Modified Time" datatype="DateTime" category="DateTime" />
+      <Fragment source="CloudSize" alias="Cloud Size" datatype="Integer" category="None" />
+      <Fragment source="OriginalSize" alias="Original Size" datatype="Integer" category="None" />
+      <Fragment source="Removed" alias="Removed" datatype="String" category="None" />
+      <Fragment source="Shared" alias="Shared" datatype="String" category="None" />
+      <Fragment source="IsFolder" alias="Is Folder" datatype="String" category="None" />
+      <Fragment source="LocalParent" alias="DocID" datatype="String" category="None" />
+	  <Fragment source="LocalFilename" alias="Local Filename" datatype="String" category="None" />
+      <Fragment source="LocalSize" alias="Local Size" datatype="Integer" category="None" />
+      <Fragment source="LocalMD5Hash" alias="Local MD5 Hash" datatype="String" category="None" />
+      <Fragment source="LocalModified" alias="Local Modified Time" datatype="DateTime" category="DateTime" />
+      <Fragment source="MD5Check" alias="Cloud/Local MD5 Check" datatype="String" category="None" />
+      <Fragment source="CloudLocalDatesCheck" alias="Cloud/Local Dates Check" datatype="String" category="None" />
+      <Fragment source="Volume" alias="Volume" datatype="String" category="None" />
+	  <Fragment source="ChildVolume" alias="Child Volume" datatype="String" category="None" />
+      <Fragment source="ParentVolume" alias="Parent Volume" datatype="String" category="None" />
+    </Fragments>
+  </Artifact>
+
+
+  <Artifact type="SqliteArtifact" name="Google Drive Cloud_Graph" version="1" platform="Computer">
+    <Source type="FileName">cloud_graph.db</Source>
+    <Query>
+		Select 
+			case 
+				when doc_id = 'root' then 'root'
+				when parent_doc_id = 'root' then 'root'
+				else (select filename from cloud_graph_entry where parent_doc_id = doc_id) 
+			end as 'Parent',
+			cloud_graph_entry.Filename as 'FileName',
+			cloud_graph_entry.size as 'Size',
+			checksum as 'MD5',
+			case doc_type
+				when 0 then 'Folder'
+				when 1 then 'File'
+				when 4 then 'Google Spreadsheet'
+				when 6 then 'Google Document'
+				when 12 then 'Google My Maps'
+				else doc_type
+			end as 'doctype',
+			case shared
+				when 0 then ''
+				when 1 then 'Yes'
+			end as 'shared',
+			cloud_graph_entry.modified as 'Modified',
+			cloud_graph_entry.version as 'Version',
+			case cloud_graph_entry.acl_role
+				when 2 then 'Can View'
+				when 1 then 'Can Contribute'
+				when 0 then 'Private'
+				else cloud_graph_entry.acl_role 
+			end as 'aclrole',
+			case cloud_graph_entry.download_restricted
+				when 0 then ''
+				when 1 then 'Yes'
+				else cloud_graph_entry.download_restricted
+			end as 'downloadrestricted',
+			cloud_graph_entry.photos_storage_policy as 'psp',
+			cloud_graph_entry.down_sample_status as 'dss',
+			doc_id as 'docid',
+			cloud_relations.parent_doc_id as 'parentid'
+
+		From cloud_graph_entry
+		left join cloud_relations on cloud_graph_entry.doc_id = cloud_relations.child_doc_id
+		order by modified desc
+    </Query>
+    <Fragments>
+	  <Fragment source="Parent" alias="Parent" datatype="String" category="None" />
+	  <Fragment source="FileName" alias="Filename" datatype="String" category="None" />
+	  <Fragment source="Size" alias="Size" datatype="String" category="None" />
+	  <Fragment source="MD5" alias="MD5 Hash" datatype="String" category="None" />
+      <Fragment source="doctype" alias="Document Type" datatype="String" category="None" />
+      <Fragment source="shared" alias="Shared" datatype="String" category="None" />
+      <Fragment source="modified" alias="Modified Time" datatype="DateTime" category="DateTime" />
+      <Fragment source="version" alias="Version " datatype="Integer" category="None" />
+      <Fragment source="aclrole" alias="ACL Role" datatype="String" category="None" />
+      <Fragment source="downloadrestricted" alias="Download Rstricted" datatype="String" category="None" />
+      <Fragment source="psp" alias="Photo Storage Policy" datatype="String" category="None" />
+      <Fragment source="dss" alias="Down Sample Status" datatype="Integer" category="None" />
+	  <Fragment source="docid" alias="Doc ID" datatype="String" category="None" />
+      <Fragment source="parentid" alias="Parent Doc ID" datatype="String" category="None" />
+    </Fragments>
+  </Artifact>  
+  
+  
+  
+  <Artifact type="SqliteArtifact" name="Google Drive USB Devices" version="1" platform="Computer">
+    <Source type="FileName">device_db.db</Source>
+    <Query>  
+    	select 
+			device_id as 'DeviceId',
+			label as 'Label',
+			device_discovery_action as 'Action',
+			usb_type as 'USBType'
+		from external_devices
+     </Query>
+    <Fragments>
+	  <Fragment source="DeviceId" alias="Device ID" datatype="String" category="None" />
+	  <Fragment source="Label" alias="Label" datatype="String" category="None" />
+	  <Fragment source="Action" alias="Device Discovery Action" datatype="Integer" category="None" />
+	  <Fragment source="USBType" alias="USB Type" datatype="Integer" category="None" /> 
+    </Fragments>
+  </Artifact>   
+ 
+  <Signature>1:AJ3q2BNcMVLP:AgD/////:H86SCkTBTkYBki1Q2chOOOpaQLNqP4Xt+V8ZLR9PbD+7BkvQOnA938xSditCLarbqp0poGe1S59YmYxDVr70LmYjeRK/gVAiknfozJPPPgdqo7qcpNVWECA89QncJsrPlJPonvCKdIQ5iZrLyDKXmVkfsVWWXf44x5FcYPtKBIyq5azG+TR6pAo31rfofqHiDNBgC2p8jMfM6kRAv4qiMzJ3BO6rslWZlrXQgUHjEJrgjUYMOvTmXjarZjmnNgtKo6gYXyWa777/ua6EduBZB7dKW8jZRLn4ys5Wr7V3ujUUcSzHk3gLZTyyBRAsFrtnqn/ETtWnbFnKWrHk8/2KYg==</Signature>
+</Artifacts>
