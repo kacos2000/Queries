@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Artifacts version="1.0">
+  <Artifact type="SqliteArtifact" name="TeraCopy Main DB" version="1.0" platform="Computer">
+    <Source type="FileName">main.db</Source>
+    <Query>SELECT name,
+        datetime(julianday(started)) AS OP_START,
+        CASE operation
+          WHEN 1 THEN 'Copy'
+          WHEN 2 THEN 'Move'
+          WHEN 3 THEN 'Test'
+          WHEN 6 THEN 'Delete'
+        END AS OP_TYPE,
+        source,
+        target,
+        files,
+        size
+      FROM List
+      ORDER BY OP_START
+    </Query>
+    <Fragments>
+      <Fragment source="name" alias="History Filename" datatype="String" category="None" />
+      <Fragment source="OP_START" alias="Operation Start" datatype="DateTime" category="DateTimeLocal" />
+      <Fragment source="OP_TYPE" alias="Operation Type" datatype="String" category="None" />
+      <Fragment source="source" alias="Source Location" datatype="String" category="None" />
+      <Fragment source="target" alias="Target Location" datatype="String" category="None" />
+      <Fragment source="files" alias="File Count" datatype="Integer" category="None" />
+      <Fragment source="size" alias="Size (Bytes)" datatype="Integer" category="None" />
+    </Fragments>
+  </Artifact>
+  <Artifact type="SqliteArtifact" name="TeraCopy History DB" version="1.0" platform="Computer">
+    <Source type="Regex">[0-9]{6}-[0-9]{6}.db</Source>
+    <Query>SELECT Source,
+        CASE State
+          WHEN 0 THEN 'Added'
+          WHEN 1 THEN 'OK'
+          WHEN 2 THEN 'Verified'
+          WHEN 3 THEN 'Error'
+          WHEN 4 THEN 'Skipped'
+          WHEN 5 THEN 'Deleted'
+          WHEN 6 THEN 'Moved'
+        END AS OP_STATE,
+        Size,
+        Attributes,
+        CASE IsFolder
+          WHEN 0 THEN ''
+          WHEN 1 THEN 'Yes'
+        END AS Folder,
+        datetime(julianday(Creation)) AS C_DT,
+        datetime(julianday(Access)) AS A_DT,
+        datetime(julianday(Write)) AS M_DT,
+        SourceCRC,
+        TargetCRC,
+        Message
+      FROM Files
+    </Query>
+    <Fragments>
+      <Fragment source="Source" alias="File Path" datatype="String" category="None" />
+      <Fragment source="OP_STATE" alias="Operation State" datatype="String" category="None" />
+      <Fragment source="Size" alias="Size (Bytes)" datatype="Integer" category="None" />
+      <Fragment source="Attributes" alias="Attributes" datatype="Integer" category="None" />
+      <Fragment source="Folder" alias="Folder" datatype="String" category="None" />
+      <Fragment source="C_DT" alias="Created Date/Time" datatype="DateTime" category="DateTime" />
+      <Fragment source="A_DT" alias="Accessed Date/Time" datatype="DateTime" category="DateTime" />
+      <Fragment source="M_DT" alias="Modified Date/Time" datatype="DateTime" category="DateTime" />
+      <Fragment source="SourceCRC" alias="Source Hash" datatype="String" category="None" />
+      <Fragment source="TargetCRC" alias="Target Hash" datatype="String" category="None" />
+      <Fragment source="Message" alias="Message" datatype="String" category="None" />
+    </Fragments>
+  </Artifact>
+  <Signature>1:AJ3q2BNcMVLP:AQD/////:gh1Ho+15dCDTCB+4N50yD3q6alwJOEXPu79MhKrzxSEPI3mNlA9Rhs0LI+vqMPtvdC1dI4yZFwQQg20KXVsHcw6xq8rM6KcA9BlhZKECaw1zYNEnWQd2ksCYe/IIpGLpB+u6Q8o51m0UxDJt0TwATf9dVnMhQTjHOUt4CyLHfBnQ7VkXOHTeEJTOB1a0IdmPKG/v0qdz4VlKJIDjY5vtf7gY49pKwWKPoPITCkSQ0yQ8Wt4iIpHJ8zSBuGSbmf1UYlSPSzE+3aGN3CetmCmIZ1N4mPL4in61RZs5oTItAkMH93ghEqz63/GrtOTZzXwgsPa7tvIXgFpts7EYxhhmIA==</Signature>
+</Artifacts>
