@@ -36,7 +36,7 @@
              - Query Google Drive's [cloud_graph.db](https://github.com/kacos2000/queries/blob/master/GDrive_cloudgraph.sql) found at the '\AppData\Local\Google\Drive\user@\cloud_graph' folder 
              
        - **Android**   <br>     
-             - [Android 7 Calllog.db (Call history)](https://github.com/kacos2000/queries/blob/master/calllog_db.sql)
-             - [Android 9 Contacts2.db (Call history)](https://github.com/kacos2000/queries/blob/master/contacts2calls.sql)
+             - [Android 7 Calllog.db (Call history)](https://github.com/kacos2000/queries/blob/master/calllog_db.sql)<br>
+             - [Android 9 Contacts2.db (Call history)](https://github.com/kacos2000/queries/blob/master/contacts2calls.sql)<br>
              
  	
