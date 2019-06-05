@@ -13,6 +13,6 @@ case type
 	else type
 end as 'type',
 datetime(date/1000,'unixepoch','localtime') as 'date',
-duration
+time(duration,'unixepoch') as 'duration'
 from calls
 order by id desc
