@@ -64,7 +64,7 @@ case numbertype --cached number type (Home, Work, etc) associated with the phone
 formatted_number,
 post_dial_digits, --post-dial portion of a dialed number
 name,
-duration, --The duration of the call in seconds 
+time(duration,'unixepoch') as 'duration', --The duration of the call in seconds 
 datetime(date/1000, 'unixepoch','localtime') as 'call_date', --The date the call occured, in milliseconds since the epoch 
 datetime(last_modified/1000, 'unixepoch','localtime') as 'lastmodified',--The date the row is last inserted, updated, or marked as deleted, in milliseconds since the epoch
 photo_id,
