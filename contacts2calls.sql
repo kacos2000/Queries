@@ -1,3 +1,5 @@
+-- Android 9 -  Contacts2.db Call History
+
 Select 
 id,
 name,
