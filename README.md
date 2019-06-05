@@ -37,4 +37,6 @@
              
        - **Android**   <br>     
              - [Android 7 Calllog.db (Call history)](https://github.com/kacos2000/queries/blob/master/calllog_db.sql)
+             - [Android 9 Contacts2.db (Call history)](https://github.com/kacos2000/queries/blob/master/contacts2calls.sql)
              
+ 	
