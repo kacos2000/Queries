@@ -1,0 +1,177 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Artifacts version="2.0">
+  <Artifact type="SqliteArtifact" name="Android 7 - calllog.db Call History" version="1.0" platform="Android">
+    <Source type="FileName">calllog.db</Source>
+    <Query>
+	-- references: 
+	-- https://developer.android.com/reference/android/provider/CallLog.Calls.html
+	-- https://developer.android.com/reference/android/provider/ContactsContract.CommonDataKinds.Phone
+
+		SELECT
+		calls."_id" as 'ID',
+		number, --The phone number as the user entered it.
+		case presentation
+			when 1 then 'allowed' --Number is allowed to display for caller id
+			when 2 then 'restricted' --Number is blocked by user
+			when 3 then 'unknown'  --Number is not specified or unknown by network
+			when 4 then 'pay phone' --Number is a pay phone
+			else presentation
+			end as 'CallerID',
+		case calls.new -- Whether or not the call has been acknowledged
+			when 1 then 'yes'
+			else ''
+			end as 'New',
+		case type
+			when 1 then 'incoming' --incoming calls
+			when 2 then 'outgoing' --outgoing calls
+			when 3 then 'missed' --missed calls
+			when 4 then 'voicemail' --Call log type for voicemails
+			when 5 then 'rejected' --rejected by direct user action
+			when 6 then 'blocked' --calls blocked automatically
+			when 7 then 'answered externally' --call which was answered on another device
+			else type
+			end as 'type',
+		-- ISREAD >> Unlike the NEW field, which requires the user to have acknowledged the existence of the entry, 
+		-- this implies the user has interacted with the entry. 
+		case is_read -- Whether this item has been read or otherwise consumed by the user. 
+			when 1 then 'yes'
+			else ''
+			end as 'isread',
+		case features
+			when 0  then 'None'
+			when 1  then 'Call had Video'
+			when 2  then 'Call was pulled externally'
+			when 4  then 'HD Call'
+			when 8  then 'Call was WIFI call'
+			when 32 then 'Call was on RTT at some point'
+			else features
+			end as 'features',	
+		operator||' ('||countryiso||')' as 'Operator',
+		"geocoded_location" as 'geocodedlocation', --The string represents a city, state, or country associated with the number associated with this call 
+		"matched_number" as 'matchednumber',
+		case numbertype --cached number type (Home, Work, etc) associated with the phone number
+			when 1 then 'Home'
+			when 2 then 'Mobile'
+			when 3 then 'Work'
+			when 4 then 'Fax_Work'
+			when 5 then 'Fax_Home'
+			when 6 then 'Pager'
+			when 7 then 'Other'
+			when 8 then 'Callback'
+			when 9 then 'Car'
+			when 10 then 'Company_Main'
+			when 11 then 'ISDN'
+			when 12 then 'Main'
+			when 13 then 'Other_Fax'
+			when 14 then 'Radio'
+			when 15 then 'Telex'
+			when 16 then 'TTY_TDD'
+			when 17 then 'Work_Mobile'
+			when 18 then 'Work_Pager'
+			when 19 then 'Assistant'
+			when 20 then 'MMS'
+			else numbertype
+			end as 'numbertype',
+		"formatted_number" as 'formattednumber',
+		"post_dial_digits" as 'postdialdigits', --post-dial portion of a dialed number
+		name,
+		time(duration,'unixepoch') as 'duration', --The duration of the call in seconds 
+		date as 'calldate', --The date the call occured, in milliseconds since the epoch 
+		"last_modified" as 'lastmodified',--The date the row is last inserted, updated, or marked as deleted, in milliseconds since the epoch
+		"photo_id" as 'photoid',
+		"photo_uri" as 'photouri',
+		"via_number" as 'vianumber', -- the via number indicates which of the numbers associated with the SIM was called
+		"phone_account_address" as 'phoneaccountaddress', --The identifier for the account used to place or receive the call
+		"subscription_id" as 'sid', --The identifier for the account used to place or receive the call,
+		case phone_account_hidden 
+			when 0 then 'No'
+			when 1 then 'Yes'
+			end as 'hidden',
+		"subscription_component_name" as 'component',
+		calls."_data" as 'data',
+		case has_content
+			when 1 then 'Yes'
+			end as 'hascontent',
+		"data_usage" as 'datausage',
+		"source_package" as 'source',		
+		transcription, --only be populated for call log entries of type VOICEMAIL_TYPE that have valid transcriptions
+		"mime_type" as 'mimetype',
+		case dirty
+			when 1 then 'yes'
+			end as 'dirty',
+		case deleted 
+			when 0 then 'no' 
+			when 1 then 'yes' 
+			end as 'deleted'
+		from calls
+		order by calls._id desc
+    </Query>
+    <Fragments>
+      <Fragment source="ID" alias="Id" datatype="Integer" category="None" />
+      <Fragment source="number" alias="number" datatype="String" category="PersonIdentifier" />
+      <Fragment source="CallerID" alias="Caller Id" datatype="String" category="None" />
+      <Fragment source="New" alias="Call acknowledged" datatype="String" category="None" />
+      <Fragment source="type" alias="Call type" datatype="String" category="None" />
+      <Fragment source="isread" alias="Is Read" datatype="String" category="None" />
+	  <Fragment source="features" alias="Call Features" datatype="String" category="None" />
+	  <Fragment source="Operator" alias="Operator" datatype="String" category="None" />
+	  <Fragment source="geocodedlocation" alias="Geocoded Location" datatype="String" category="None" />
+	  <Fragment source="matchednumber" alias="Matched Number" datatype="String" category="PersonIdentifier" />
+	  <Fragment source="numbertype" alias="Cached Number type" datatype="String" category="None" />
+	  <Fragment source="formattednumber" alias="Formatted Number" datatype="String" category="PersonIdentifier" />
+	  <Fragment source="postdialdigits" alias="Post Dial Digits" datatype="String" category="None" />
+	  <Fragment source="name" alias="Name" datatype="String" category="PersonIdentifier" />
+	  <Fragment source="duration" alias="Call Duration (HH:MM:SS)" datatype="String" category="None" />
+	  <Fragment source="calldate" alias="Call Date" datatype="DateTime" dateformat="UNIX Time (ms)" category="DateTime" />
+	  <Fragment source="lastmodified" alias="Last Modified Date" datatype="DateTime" dateformat="UNIX Time (ms)" category="DateTime" />
+	  <Fragment source="photoid" alias="Photo Id" datatype="String" category="None" />
+	  <Fragment source="photouri" alias="Photo Location" datatype="String" category="None" />
+	  <Fragment source="vianumber" alias="Via Number" datatype="String" category="None" />
+	  <Fragment source="phoneaccountaddress" alias="Phone Account Address" datatype="String" category="None" />
+	  <Fragment source="sid" alias="Subscription Id" datatype="String" category="None" />
+	  <Fragment source="hidden" alias="Account Hidden" datatype="String" category="None" />
+	  <Fragment source="component" alias="Subscription Component Name" datatype="String" category="None" />
+	  <Fragment source="data" alias="Data" datatype="String" category="None" />
+	  <Fragment source="hascontent" alias="Has Content" datatype="String" category="None" />
+	  <Fragment source="datausage" alias="Data Usage" datatype="Integer" category="None" />
+	  <Fragment source="source" alias="Source Package" datatype="String" category="None" />
+	  <Fragment source="transcription" alias="Transcription" datatype="String" category="None" />
+	  <Fragment source="mimetype" alias="MIME type" datatype="String" category="None" />
+	  <Fragment source="dirty" alias="Dirty" datatype="String" category="None" />
+	  <Fragment source="deleted" alias="Deleted" datatype="String" category="None" />
+    </Fragments>
+  </Artifact>
+  <Artifact type="SqliteArtifact" name="Android 9 - Contacts2.db Call History" version="1.0" platform="Android">
+    <Source type="FileName">Contacts2.db</Source>
+    <Query>
+      Select 
+		id,
+		name,
+		number,
+		case type
+			when 1 then 'incoming' --incoming calls
+			when 2 then 'outgoing' --outgoing calls
+			when 3 then 'missed' --missed calls
+			when 4 then 'voicemail' --Call log type for voicemails
+			when 5 then 'rejected' --rejected by direct user action
+			when 6 then 'blocked' --calls blocked automatically
+			when 7 then 'answered externally' --call which was answered on another device
+			else type
+		end as 'type',
+		date,
+		time(duration,'unixepoch') as 'duration'
+		from calls
+		order by id desc
+    </Query>
+    <Fragments>
+      <Fragment source="id" alias="Id" datatype="Integer" category="None" />
+      <Fragment source="name" alias="Name" datatype="String" category="PersonIdentifier" />
+      <Fragment source="number" alias="Number" datatype="String" category="PersonIdentifier" />
+      <Fragment source="type" alias="Call type" datatype="String" category="None" />
+      <Fragment source="date" alias="Call date" datatype="DateTime" dateformat="UNIX Time (ms)" category="DateTime" />
+      <Fragment source="duration" alias="Call duration (HH:MM:SS)" datatype="String" category="None" />
+    </Fragments>
+  </Artifact>
+  <Signature>
+  </Signature>
+</Artifacts>
