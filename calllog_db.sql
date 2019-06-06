@@ -14,7 +14,7 @@ case presentation
 	when 3 then 'unknown'  --Number is not specified or unknown by network
 	when 4 then 'pay phone' --Number is a pay phone
 	else presentation
-	end as 'CallerIDtype',
+	end as 'CallerID',
 case calls.new -- Whether or not the call has been acknowledged
 	when 1 then 'yes'
 	else ''
@@ -35,6 +35,15 @@ case is_read -- Whether this item has been read or otherwise consumed by the use
 	when 1 then 'yes'
 	else ''
 	end as 'is read',
+case features
+	when 0 then 'None'
+	when 1 then 'Call had Video'
+	when 2 then 'Call was pulled externally'
+	when 4 then 'HD Call'
+	when 8 then 'Call was WIFI call'
+	when 32 then 'Call was on RTT at some point'
+	else features
+	end as 'features',
 operator||' ('||countryiso||')' as 'Operator',
 geocoded_location, --The string represents a city, state, or country associated with the number associated with this call 
 matched_number,
@@ -72,8 +81,17 @@ photo_uri,
 via_number, -- the via number indicates which of the numbers associated with the SIM was called
 phone_account_address, --The identifier for the account used to place or receive the call
 subscription_id as 'sid', --The identifier for the account used to place or receive the call,
-
-calls._data,
+case phone_account_hidden 
+	when 0 then 'No'
+	when 1 then 'Yes'
+	end as 'hidden',
+subscription_component_name as 'component',
+calls._data as 'data',
+case has_content
+	when 1 then 'Yes'
+	end as 'has content',
+data_usage,
+source_package,	
 transcription, --only be populated for call log entries of type VOICEMAIL_TYPE that have valid transcriptions
 mime_type,
 case dirty
