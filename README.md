@@ -47,6 +47,7 @@
              - [IOS 'healthdb.sqlite'](https://github.com/kacos2000/queries/blob/master/healthdb.sql)<br>
              - [IOS 'healthdb_secure.sqlite'](https://github.com/kacos2000/queries/blob/master/healthdb_secure.sql)<br>
              - [IOS 'notes.sqlite'](https://github.com/kacos2000/queries/blob/master/notes_sqlite.sql)<br>
+             - [IOS '\Home\Library\Mail\Recents' (Mail)](https://github.com/kacos2000/queries/blob/master/recents.sql)<br>
              - [IOS 'sms.db' (SMS/iMessages](https://github.com/kacos2000/queries/blob/master/sms_db.sql)<br>
              - [IOS 'callhistory.storedata' (Call history)](https://github.com/kacos2000/queries/blob/master/callhistory_storedata.sql)<br>           
  	
