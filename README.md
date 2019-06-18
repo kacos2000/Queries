@@ -30,24 +30,22 @@
              - [Sample Output (csv)](https://github.com/kacos2000/queries/blob/master/cache_db.csv)<br><br>
 
 
-
        - **Google Drive**   <br>     
-             - Query Google Drive's [snapshot.db](https://github.com/kacos2000/queries/blob/master/GDrive_snapshot.sql) found at the '\AppData\Local\Google\Drive\user@' folder  .<br>
-             - Query Google Drive's [cloud_graph.db](https://github.com/kacos2000/queries/blob/master/GDrive_cloudgraph.sql) found at the '\AppData\Local\Google\Drive\user@\cloud_graph' folder 
+           - Query Google Drive's [snapshot.db](https://github.com/kacos2000/queries/blob/master/GDrive_snapshot.sql) found at the '\AppData\Local\Google\Drive\user@' folder  .<br>
+            - Query Google Drive's [cloud_graph.db](https://github.com/kacos2000/queries/blob/master/GDrive_cloudgraph.sql) found at the '\AppData\Local\Google\Drive\user@\cloud_graph' folder <br><br>
              
        - **Android**   <br>     
-             - [Android 7 Calllog.db (Call history)](https://github.com/kacos2000/queries/blob/master/calllog_db.sql)<br>
-             - [Android 7 Contacts2.db (Contacts)](https://github.com/kacos2000/queries/blob/master/contacts2.sql)<br>
-             - [Android 9 Contacts2.db (Call history)](https://github.com/kacos2000/queries/blob/master/contacts2calls.sql)<br>
-       
-       
+            - [Android 7 Calllog.db (Call history)](https://github.com/kacos2000/queries/blob/master/calllog_db.sql)<br>
+            - [Android 7 Contacts2.db (Contacts)](https://github.com/kacos2000/queries/blob/master/contacts2.sql)<br>
+            - [Android 9 Contacts2.db (Call history)](https://github.com/kacos2000/queries/blob/master/contacts2calls.sql)<br><br>
+                   
        - **IOS**     <br>     
-             - [IOS 'Photos.db'](https://github.com/kacos2000/queries/blob/master/Photos_sqlite.sql)<br>
-             - [IOS 'iPhotoLite.db'](https://github.com/kacos2000/queries/blob/master/iPhotoLitedb.sql)<br>
-             - [IOS 'healthdb.sqlite'](https://github.com/kacos2000/queries/blob/master/healthdb.sql)<br>
-             - [IOS 'healthdb_secure.sqlite'](https://github.com/kacos2000/queries/blob/master/healthdb_secure.sql)<br>
-             - [IOS 'notes.sqlite'](https://github.com/kacos2000/queries/blob/master/notes_sqlite.sql)<br>
-             - [IOS '\Home\Library\Mail\Recents' (Mail)](https://github.com/kacos2000/queries/blob/master/recents.sql)<br>
-             - [IOS 'sms.db' (SMS/iMessages](https://github.com/kacos2000/queries/blob/master/sms_db.sql)<br>
-             - [IOS 'callhistory.storedata' (Call history)](https://github.com/kacos2000/queries/blob/master/callhistory_storedata.sql)<br>           
+            - [IOS 'Photos.db'](https://github.com/kacos2000/queries/blob/master/Photos_sqlite.sql)<br>
+            - [IOS 'iPhotoLite.db'](https://github.com/kacos2000/queries/blob/master/iPhotoLitedb.sql)<br>
+            - [IOS 'healthdb.sqlite'](https://github.com/kacos2000/queries/blob/master/healthdb.sql)<br>
+            - [IOS 'healthdb_secure.sqlite'](https://github.com/kacos2000/queries/blob/master/healthdb_secure.sql)<br>
+            - [IOS 'notes.sqlite'](https://github.com/kacos2000/queries/blob/master/notes_sqlite.sql)<br>
+            - [IOS '\Home\Library\Mail\Recents' (Mail)](https://github.com/kacos2000/queries/blob/master/recents.sql)<br>
+            - [IOS 'sms.db' (SMS/iMessages](https://github.com/kacos2000/queries/blob/master/sms_db.sql)<br>
+            - [IOS 'callhistory.storedata' (Call history)](https://github.com/kacos2000/queries/blob/master/callhistory_storedata.sql)<br>           
  	
