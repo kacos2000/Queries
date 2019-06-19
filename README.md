@@ -46,7 +46,7 @@
             
             - [IOS 'AddressBook.sqlitedb' (AddressBook)](https://github.com/kacos2000/queries/blob/master/AddressBook_sqlite.sql)<br>
             - [IOS 'AddressBookImages.sqlitedb' (AddressBook Images)](https://github.com/kacos2000/queries/blob/master/AddressBookImages_sqlite.sql)<br>
-            - [IOS 'Photos.db'](https://github.com/kacos2000/queries/blob/master/Photos_sqlite.sql)<br>
+            - [IOS 'Photos.sqlite'](https://github.com/kacos2000/queries/blob/master/Photos_sqlite.sql)<br>
             - [IOS 'iPhotoLite.db'](https://github.com/kacos2000/queries/blob/master/iPhotoLitedb.sql)<br>
             - [IOS 'healthdb.sqlite'](https://github.com/kacos2000/queries/blob/master/healthdb.sql)<br>
             - [IOS 'healthdb_secure.sqlite'](https://github.com/kacos2000/queries/blob/master/healthdb_secure.sql)<br>
