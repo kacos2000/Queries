@@ -15,7 +15,8 @@ ABPerson.JobTitle,
 ABPerson.Nickname,
 abperson.Note,
 date('2001-01-01', abperson.Birthday || ' seconds') as 'Birthdate',
-
+ABPerson.Prefix,
+ABPerson.Suffix,
 (select 
 	value from ABMultiValue where property = 3 and record_id = ABPerson.ROWID and 
 	label = (select ROWID from ABMultiValueLabel where value = '_$!<Main>!$_')) as 'Main',
