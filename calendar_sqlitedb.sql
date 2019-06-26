@@ -1,9 +1,15 @@
+-- \Home\Library\Calendar\Calendar.sqlitedb
+
+-- Z_PK = Primary Key (unique identifier) for the entity,
+-- Z_ENT = is the entity ID (every entity of a particular type has the same entity ID)
+-- Z_OPT = number of times an entity has been changed
+
 Select 
 store.name as 'StoreName',
 Calendar.title||' ('||calendaritem.calendar_id||')' as 'Title',
 calendaritem.summary,
 calendaritem.description,
-calendaritem.conference,
+-- calendaritem.conference, -- Does not exist in IOS 11
 datetime('2001-01-01', calendaritem.creation_date || ' seconds') as 'CreationDate',
 case 
 	when calendaritem.start_tz != '_float'
@@ -53,7 +59,7 @@ Location.address_book_id,
 Location.alarm_owner_id,
 Calendar.notes,
 Calendar.shared_owner_name,
-Calendar.shared_owner_email,
+-- Calendar.shared_owner_email, -- Does not exist in IOS 11
 Calendar.external_id
 
 from calendaritem
