@@ -133,13 +133,12 @@ case ZMOMENTLIST.ZREVERSELOCATIONDATAISVALID
 	when 0 then 'No'
 	when 1 then 'Yes'
 	end as 'LocationValid',
-ZADDITIONALASSETATTRIBUTES.ZREVERSELOCATIONDATA as 'ReverseLocationData2(bplist)'
+ZADDITIONALASSETATTRIBUTES.ZREVERSELOCATIONDATA as 'ReverseLocationData2(bplist)',
 	
--- case ZADDITIONALASSETATTRIBUTES.ZSHIFTEDLOCATIONISVALID -- Field does not exist in IOS 8.3
---	when 0 then 'No'
---	when 1 then 'Yes'
---	end as 'ShiftedLocationValid'
-
+case ZADDITIONALASSETATTRIBUTES.ZSHIFTEDLOCATIONISVALID -- Field does not exist in IOS 8.3
+	when 0 then 'No'
+	when 1 then 'Yes'
+	end as 'ShiftedLocationValid'
 
 from zgenericasset
 join Z_PRIMARYKEY on zgenericasset.z_ent = Z_PRIMARYKEY.z_ent
