@@ -1,5 +1,10 @@
+-- \Home\Library\SMS\sms.db
+
+-- Z_PK = Primary Key (unique identifier) for the entity,
+-- Z_ENT = is the entity ID (every entity of a particular type has the same entity ID)
+-- Z_OPT = number of times an entity has been changed
+
 select 
--- \Library\SMS\sms.db
 
 case when message."date" != 0 then datetime('2001-01-01', message."date" || ' seconds') end as 'MessageDate',
 case when message.date_delivered != 0 then datetime('2001-01-01', message.date_delivered || ' seconds') end as 'DateDelivered',
@@ -18,7 +23,7 @@ case message.is_from_me
 	when 1 then message.text
 	end as 'MyText',
 case message.is_from_me
-	when 0 then message.text
+	when not 1 then message.text
 	end as 'RemoteText',
 message.attributedBody as 'attributedBody(BLOB)',
 chat.display_name,
@@ -72,9 +77,6 @@ chat.properties as 'ChatProperties(bplist)',
 message.guid as 'MessageGUID',
 chat.account_id,
 chat.group_id
-
-
-
 
 from message
 left join handle on message.handle_id = handle.ROWID or message.other_handle = handle.ROWID
