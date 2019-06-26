@@ -45,6 +45,7 @@
             - [IOS 'Extras.db' (Calendar)](https://github.com/kacos2000/queries/blob/master/calendar_extras.sql)<br>
             - [IOS 'AddressBook.sqlitedb' (AddressBook)](https://github.com/kacos2000/queries/blob/master/AddressBook_sqlite.sql)<br>
             - [IOS 'AddressBookImages.sqlitedb' (AddressBook Images)](https://github.com/kacos2000/queries/blob/master/AddressBookImages_sqlite.sql)<br>
+            - [IOS 11 'Photos.sqlite'](https://github.com/kacos2000/queries/blob/master/Photos_sqlite11.sql)<br>
             - [IOS 7+ 'Photos.sqlite'](https://github.com/kacos2000/queries/blob/master/Photos_sqlite.sql)<br>
             - [IOS 3 'Photos.sqlite'](https://github.com/kacos2000/queries/blob/master/Photos_sqlite3.sql)<br>
             - [IOS 'iPhotoLite.db'](https://github.com/kacos2000/queries/blob/master/iPhotoLitedb.sql)<br>
