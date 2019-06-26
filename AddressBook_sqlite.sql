@@ -1,6 +1,10 @@
 -- IOS 
 -- Database: Home\Library\AddressBook\AddressBook.sqlitedb
 
+-- Z_PK = Primary Key (unique identifier) for the entity,
+-- Z_ENT = is the entity ID (every entity of a particular type has the same entity ID)
+-- Z_OPT = number of times an entity has been changed
+
 Select 
 ABAccount.AccountIdentifier,
 abstore.Name as 'Store',
