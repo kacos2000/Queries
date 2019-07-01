@@ -36,7 +36,7 @@ Select
 		when 4 then 'pay phone' --Number is a pay phone
 		else logs.presentation
 		end as 'CallerID',	
-	datetime(logs.date/1000, 'unixepoch') as 'Date',
+	datetime(logs.date/1000, 'unixepoch') as 'lDate',
 	case 
 		when logs.duration != 0
 		then Time(logs.duration, 'unixepoch') 
@@ -54,11 +54,11 @@ Select
 	case 
 		when logs.logtype in (100)
 		then 'Call ('||logs.logtype||')'
-		when logs.logtype in (200,300,500)
-		then 'Message ('||logs.logtype||')'
+		when logs.logtype in (300)
+		then 'SMS ('||logs.logtype||')'
 		when logs.logtype in (400)
 		then 'Email ('||logs.logtype||')'
-		else logs.logtype
+		else 'Other ('||logs.logtype||')'
 		end as 'logtype',
 	logs.messageid,		
 	case logs.is_read
@@ -74,6 +74,6 @@ Select
 	logs.raw_contact_id,
 	logs.lookup_uri,
 	logs.photo_id,
-	
 	logs.account_name||' ('||logs.account_id||')' as 'Account'
 from logs
+order by lDate desc
