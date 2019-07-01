@@ -37,7 +37,8 @@
        - **Android**   <br>     
             - [Android 7 Calllog.db (Call history)](https://github.com/kacos2000/queries/blob/master/calllog_db.sql)<br>
             - [Android 7 Contacts2.db (Contacts)](https://github.com/kacos2000/queries/blob/master/contacts2.sql)<br>
-            - [Android 9 Contacts2.db (Call history)](https://github.com/kacos2000/queries/blob/master/contacts2calls.sql)<br><br>
+            - [Android 9 Contacts2.db (Call history)](https://github.com/kacos2000/queries/blob/master/contacts2calls.sql)<br>
+            - [Android logs.db (Samsung Calls/messages)](https://github.com/kacos2000/queries/blob/master/logs_db.sql)<br><br>
                    
        - **IOS**     <br>     
             - [IOS 'Accounts3.sqlite' (Accounts)](https://github.com/kacos2000/queries/blob/master/Accounts3_sqlite.sql)<br>
