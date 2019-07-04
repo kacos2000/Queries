@@ -1,4 +1,4 @@
--- IOS 11 - Camera Roll\Media\PhotoData\Photos.sqlite
+-- IOS 11/12 - Camera Roll\Media\PhotoData\Photos.sqlite
 
 -- References:
 --
@@ -6,14 +6,21 @@
 -- https://github.com/geiszla/iOSLib/wiki/ZADDITIONALASSETATTRIBUTES-contents
 -- https://forensenellanebbia.blogspot.com/2015/10/apple-ios-recently-deleted-images.html
 -- SIDECAR https://en.wikipedia.org/wiki/Sidecar_file
-
+--
+-- Live Photo is a video-picture hybrid file with both animated MOV and static JPG combined. 
+-- https://appletoolbox.com/live-photos-on-iphone-complete-guide/ 
+-- 
+-- OriginalFilename is the filename used when this was shared in another app
+-- Filename is the IOS converted filename after the above image was saved on the device(iPhone)
+--
 -- Z_PK = Primary Key (unique identifier) for the entity,
 -- Z_ENT = is the entity ID (every entity of a particular type has the same entity ID)
 -- Z_OPT = number of times an entity has been changed
 --
+-- https://linuxsleuthing.blogspot.com/2013/05/ios6-photo-streams-recover-deleted.html
+-- https://discussions.apple.com/thread/8184861 
 
 select 
-Z_PRIMARYKEY.Z_NAME as 'Type',
 case zgenericasset.ZSAVEDASSETTYPE
 		when 0 then 'Saved from other source'
 		when 2 then 'Photo Streams Data'
