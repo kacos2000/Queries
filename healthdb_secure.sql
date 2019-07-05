@@ -5,9 +5,8 @@
 -- https://www.sans.org/cyber-security-summit/archives/file/summit-archive-1528385073.pdf
 -- https://objectivebythesea.com/v1/talks/OBTS_v1_Edwards.pdf
 
-select -- 
-category_samples.value,
-data_provenances.origin_device||' - '||data_provenances.origin_build as 'Device',
+select 
+data_provenances.origin_device||' ('||data_provenances.source_version||')' as 'Device',
 case samples.data_type  
 	when 3 then 'Weight'
 	when 5 then 'Heart Rate'
@@ -24,18 +23,17 @@ case samples.data_type
 	when 83 then 'Some workouts'
 	else samples.data_type -- 20’s ~ 30’s = Nutrition
 	end as 'DataType',
-quantity_samples.original_quantity||' '||unit_strings.unit_string as 'originalquantity',
-quantity_samples.quantity as 'quantity',
+quantity_samples.original_quantity||' '||unit_strings.unit_string as 'Quantity',
+quantity_samples.quantity as 'Original_Quantity',
 datetime('2001-01-01', samples.start_date || ' seconds') as 'StartDate',
 datetime('2001-01-01', samples.end_date || ' seconds') as 'EndDate'
 
 from samples
-left join activity_caches on activity_caches.data_id = samples.data_id
-left join quantity_samples on quantity_samples.data_id = samples.data_id
-left join correlations on samples.data_id = correlations.object
-left join data_provenances on data_provenances.ROWID = quantity_samples.original_unit 
-left join category_samples on category_samples.data_id = samples.data_id
-left join unit_strings on unit_strings.ROWID = quantity_samples.original_unit
+	left join activity_caches on activity_caches.data_id = samples.data_id
+	left join quantity_samples on quantity_samples.data_id = samples.data_id
+	left join correlations on samples.data_id = correlations.object
+	left join data_provenances on data_provenances.ROWID = quantity_samples.original_unit 
+	left join unit_strings on unit_strings.ROWID = quantity_samples.original_unit
 
 --where data_type = 5 -- filter by heart rate
 order by StartDate desc
