@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Artifacts version="2.0">
+  <Artifact type="SqliteArtifact" name="IOS 8+ photos.sqlite" version="1" platform="Ios">
+    <Source type="FileName">Photos.sqlite</Source>
+    <Query>
+-- IOS 8+ - Camera Roll\Media\PhotoData\Photos.sqlite
+
+-- Referencess:
+--
+-- https://github.com/geiszla/iOSLib/wiki/ZGENERICASSET-contents
+-- https://github.com/geiszla/iOSLib/wiki/ZADDITIONALASSETATTRIBUTES-contents
+-- https://forensenellanebbia.blogspot.com/2015/10/apple-ios-recently-deleted-images.html
+-- SIDECAR https://en.wikipedia.org/wiki/Sidecar_file
+--
+-- Live Photo is a video-picture hybrid file with both animated MOV and static JPG combined. 
+-- https://appletoolbox.com/live-photos-on-iphone-complete-guide/ 
+-- 
+-- OriginalFilename is the filename used when this was shared in another app
+-- Filename is the IOS converted filename after the above image was saved on the device(iPhone)
+--
+-- Z_PK = Primary Key (unique identifier) for the entity,
+-- Z_ENT = is the entity ID (every entity of a particular type has the same entity ID)
+-- Z_OPT = number of times an entity has been changed
+--
+-- https://linuxsleuthing.blogspot.com/2013/05/ios6-photo-streams-recover-deleted.html
+-- https://discussions.apple.com/thread/8184861 
+
+
+select 
+	zgenericasset.Z_PK as 'zpk',
+	case zgenericasset.ZSAVEDASSETTYPE
+			when 0 then 'Saved from other source'
+			when 2 then 'Photo Streams Data'
+			when 3 then 'Made/saved with this device'
+			when 4 then 'Default row'
+			when 7 then 'Deleted'
+			else zgenericasset.ZSAVEDASSETTYPE
+			end as 'AssetType',
+	zgenericasset.ZDIRECTORY as 'Directory',
+	zgenericasset.ZFILENAME as 'FileName',
+	ZADDITIONALASSETATTRIBUTES.ZORIGINALFILENAME as 'OriginalFilename',
+	ZADDITIONALASSETATTRIBUTES.ZORIGINALFILESIZE as 'OriginalSize',
+--  zgenericasset.ZORIGINALCOLORSPACE as 'ColorSpace',
+	zgenericasset.ZUNIFORMTYPEIDENTIFIER as 'FormType',
+	ZSIDECARFILE.ZFILENAME as ' SidecarFilename',
+	ZSIDECARFILE.ZORIGINALFILENAME as 'SidecarOriginalF',
+	ZSIDECARFILE.ZCOMPRESSEDSIZE as ' CompressedSize',
+	ZSIDECARFILE.ZUNIFORMTYPEIDENTIFIER as 'SidecarFormType',
+	ZIMAGEURLDATA as 'ImageURLdata',
+	ZTHUMBNAILURLDATA as 'ThumbnailURLdata',
+--  case zgenericasset.ZLATITUDE 
+	-- 	when -180.0
+	--	then ''
+	--	else zgenericasset.ZLATITUDE
+	--	end as ' Latitude',
+-- case zgenericasset.ZLONGITUDE 
+	-- 	when -180.0
+	--	then ''
+	--	else zgenericasset.ZLONGITUDE
+	--	end as ' Longitude',
+	case ZCLOUDDOWNLOADREQUESTS
+		when 0 then 'No'
+		when 1 then 'Yes'
+		end as 'CLOUDDOWNLOADREQUESTS',
+	case ZCLOUDISDELETABLE 
+			when 1 then 'Yes'
+			end as 'CLOUDISDELETABLE',
+	case ZCLOUDISMYASSET  
+			when 1 then 'Yes'
+			end as 'CLOUDISMYASSET',
+	case ZCLOUDLOCALSTATE 
+		when 0 then 'Local'
+		when 1 then 'Remote'
+		end as 'CLOUDLOCALSTATE',		
+	case ZFAVORITE   
+			when 0 then 'No'
+			when 1 then 'Yes'
+			end as 'Favorite',		
+	case ZHASADJUSTMENTS    
+			when 0 then 'No'
+			when 1 then 'Yes'
+			end as 'Modified',
+	ZWIDTH||' x '||ZHEIGHT as 'Dimenasions',
+	ZADDITIONALASSETATTRIBUTES.ZEMBEDDEDTHUMBNAILWIDTH||' x '||ZADDITIONALASSETATTRIBUTES.ZEMBEDDEDTHUMBNAILHEIGHT as 'EmbeddedThumbnail',
+	ZADDITIONALASSETATTRIBUTES.ZEMBEDDEDTHUMBNAILOFFSET as 'EmbeddedThumbnailOffset',
+	ZADDITIONALASSETATTRIBUTES.ZEMBEDDEDTHUMBNAILLENGTH as 'ETNLength',
+	time(ZDURATION,'unixepoch') as 'Duration',
+	time(zgenericasset.ZVIDEOCPDURATIONVALUE,  'unixepoch') as 'CPDuration',
+	case ZORIENTATION    
+			when 1 then 'Horizontal (left)'
+			when 3 then 'Horizontal (right)'
+			when 6 then 'Vertical (up)'
+			when 8 then 'Vertical (down)'
+			else ZORIENTATION
+			end as 'Orientation',
+	case ZKIND    
+			when 0 then 'Photo'
+			when 1 then 'Video'
+			end as 'Kind',
+	case ZKINDSUBTYPE    
+			when 0 then 'Normal'
+			when 1 then 'Panorama'
+			when 100 then 'Default row'
+			when 101 then 'Slo-mo'
+			when 102 then 'Timelapse'
+			else ZKINDSUBTYPE
+			end as 'SubType',
+	case zgenericasset.ZTRASHEDSTATE     
+			when 1 then 'Deleted'
+			when 0 then 'Not Deleted'
+			else zgenericasset.ZTRASHEDSTATE
+			end as 'TrashState',
+	datetime('2001-01-01', ZTRASHEDDATE || ' seconds') as 'TrashedDate',
+	case ZCOMPLETE  
+			when 1 then 'Yes'
+			end as 'Complete',		
+	case ZVISIBILITYSTATE     
+			when 0 then 'Visible'
+			when 1 then 'Photo Streams Data'
+			when 2 then 'Burst'
+			else ZVISIBILITYSTATE
+			end as 'VisibilityState',
+	ZADDITIONALASSETATTRIBUTES.ZCREATORBUNDLEID as 'CreatorBundleID',
+	ZADDITIONALASSETATTRIBUTES.ZEDITORBUNDLEID as 'EditorBundleID',
+	ZUNMANAGEDADJUSTMENT.ZADJUSTMENTFORMATIDENTIFIER||' ('||ZUNMANAGEDADJUSTMENT.ZADJUSTMENTFORMATVERSION||')' as 'AdjustmentFormatIdentifier',
+	ZSIDECARFILE.ZCAPTUREDATE as 'SidecarCaptudeDate',
+	ZSIDECARFILE.ZMODIFICATIONDATE as 'SidecarModificationDate',
+	ZUNMANAGEDADJUSTMENT.ZADJUSTMENTTIMESTAMP as 'AdjustmentTimestamp',
+--  datetime('2001-01-01', zgenericasset.ZFACEADJUSTMENTVERSION as 'FaceAdjustmentVersion',
+	ZGENERICASSET.ZMODIFICATIONDATE as 'ModificationDate',
+	ZADDEDDATE as 'AddedDate',
+	ZDATECREATED as 'CreatedDate',
+	ZADDITIONALASSETATTRIBUTES.ZEXIFTIMESTAMPSTRING as 'EXIFtimestamp',
+	ZMOMENT.ZSTARTDATE as 'MomentStartDate',
+	ZMOMENT.ZENDDATE as 'MomentEndDate',
+	zgenericasset.ZLASTSHAREDDATE as 'LastSharedDate',
+	ZADDITIONALASSETATTRIBUTES.ZTIMEZONENAME||' ('||ZADDITIONALASSETATTRIBUTES.ZTIMEZONEOFFSET||')' as 'TimeZone',
+	ZMOMENT.ZAPPROXIMATELOCATIONDATA as 'ApproximateLocationData(bplist)',	
+	ZMOMENT.ZREVERSELOCATIONDATA as 'ReverseLocationData0(bplist)',	
+	case ZMOMENT.ZREVERSELOCATIONDATAISVALID 
+		when 0 then 'No'
+		when 1 then 'Yes'
+		end as 'LocationValid',	
+	ZMOMENTLIST.ZREVERSELOCATIONDATA as 'ReverseLocationData1(bplist)',		
+	case ZMOMENTLIST.ZREVERSELOCATIONDATAISVALID 
+		when 0 then 'No'
+		when 1 then 'Yes'
+		end as 'LocationValid1',
+--		case ZADDITIONALASSETATTRIBUTES.ZSHIFTEDLOCATIONISVALID -- Field does not exist in IOS 8.3
+--		when 0 then 'No'
+--		when 1 then 'Yes'
+--		end as 'ShiftedLocationValid,'
+		ZADDITIONALASSETATTRIBUTES.ZREVERSELOCATIONDATA as 'ReverseLocationData2'
+
+from zgenericasset
+	join Z_PRIMARYKEY on zgenericasset.z_ent = Z_PRIMARYKEY.z_ent
+	left join ZMOMENTLIST on zgenericasset.ZMOMENT = ZMOMENTLIST.Z_PK
+	left join ZMOMENT on ZGENERICASSET."ZMOMENT" = ZMOMENT.Z_PK
+	join ZADDITIONALASSETATTRIBUTES on ZGENERICASSET.ZADDITIONALATTRIBUTES = ZADDITIONALASSETATTRIBUTES.Z_PK
+	left join ZUNMANAGEDADJUSTMENT on ZADDITIONALASSETATTRIBUTES."ZUNMANAGEDADJUSTMENT" = ZUNMANAGEDADJUSTMENT.Z_PK
+	left join ZSIDECARFILE on ZSIDECARFILE.ZASSET = ZGENERICASSET.Z_PK
+-- order by CreatedDate desc
+    </Query>
+    <Fragments>
+      <Fragment source="zpk" alias="pKey" datatype="Integer" category="None" />
+      <Fragment source="AssetType" alias="AssetType" datatype="String" category="None" />
+      <Fragment source="Directory" alias="Directory" datatype="String" category="None" />
+      <Fragment source="FilenName" alias="FilenName" datatype="String" category="None" />
+      <Fragment source="OriginalFilename" alias="OriginalFilename" datatype="String" category="None" />
+      <Fragment source="OriginalSize" alias="OriginalSize" datatype="Integer" category="None" />
+      <Fragment source="FormType" alias="FormType" datatype="String" category="None" />
+      <Fragment source="PayloadTimezone" alias="Payload-Timezone" datatype="String" category="None" />
+      <Fragment source="SidecarFilename" alias="SidecarFilename" datatype="String" category="None" />
+      <Fragment source="SidecarOriginalF" alias="Sidecar  Original Filename" datatype="String" category="None" />
+      <Fragment source="CompressedSize" alias="CompressedSize" datatype="Integer" category="None" />
+      <Fragment source="SidecarFormType" alias="SidecarFormType" datatype="String" category="None" />
+      <Fragment source="ImageURLdata" alias="ImageURLdata" datatype="String" category="None" />
+      <Fragment source="ThumbnailURLdata" alias="ThumbnailURLdata" datatype="String" category="None" />
+      <Fragment source="CLOUDDOWNLOADREQUESTS" alias="Cloud Download Requests" datatype="String" category="None" />
+      <Fragment source="CLOUDISDELETABLE" alias="Cloud id Deletable" datatype="String" category="None" />
+      <Fragment source="CLOUDISMYASSET" alias="Cloiud is my Asset" datatype="String" category="None" />
+      <Fragment source="CLOUDLOCALSTATE" alias="Cloud/Local" datatype="String" category="None" />
+      <Fragment source="Favorite" alias="Favorite" datatype="String" category="None" />
+      <Fragment source="Modified" alias="Modified" datatype="String" category="None" />
+      <Fragment source="Dimenasions" alias="Dimenasions (WxH)" datatype="String" category="None" />
+      <Fragment source="EmbeddedThumbnail" alias="EmbeddedT humbnail (WxH)" datatype="String" category="None" />
+      <Fragment source="EmbeddedThumbnailOffset" alias="EmbeddedThumbnailOffset" datatype="String" category="None" />
+      <Fragment source="ETNLength" alias="thumbLength" datatype="String" category="None" />
+      <Fragment source="Duration" alias="Duration" datatype="String" category="None" />
+      <Fragment source="Orientation" alias="Orientation" datatype="String" category="None" />
+      <Fragment source="Kind" alias="Kind" datatype="String" category="None" />
+      <Fragment source="SubType" alias="SubType" datatype="String" category="None" />
+      <Fragment source="TrashState" alias="TrashState" datatype="String" category="None" />
+      <Fragment source="Complete" alias="Complete" datatype="String" category="None" />
+      <Fragment source="VisibilityState" alias="Visibility" datatype="String" category="None" />
+      <Fragment source="CreatorBundleID" alias="CreatorBundleID" datatype="String" category="None" />
+      <Fragment source="EditorBundleID" alias="EditorBundleID" datatype="String" category="None" />
+      <Fragment source="AdjustmentFormatIdentifier" alias="Adjustment Format" datatype="String" category="None" />
+      <Fragment source="SidecarCaptudeDate" alias="Sidecar Captude Date" datatype="DateTime" dateformat="Apple Time" category="DateTime" />
+	  <Fragment source="SidecarModificationDate" alias="Sidecar Modification Date" datatype="DateTime" dateformat="Apple Time" category="DateTime" /> 
+	  <Fragment source="AdjustmentTimestamp" alias="Adjustment Timestamp" datatype="DateTime" dateformat="Apple Time" category="DateTime" /> 
+	  <Fragment source="ModificationDate" alias="Modification Date" datatype="DateTime" dateformat="Apple Time" category="DateTime" />
+	  <Fragment source="AddedDate" alias="AddedDate" datatype="DateTime" dateformat="Apple Time" category="DateTime" />
+	  <Fragment source="EXIFtimestamp" alias="EXIF timestamp" datatype="String" category="DateTime" /> 
+	  <Fragment source="MomentStartDate" alias="Moment Start Date" datatype="DateTime" dateformat="Apple Time" category="DateTime" /> 
+	  <Fragment source="MomentEndDate" alias="Moment End Date" datatype="DateTime" dateformat="Apple Time" category="DateTime" /> 
+	  <Fragment source="LastSharedDate" alias="Last Shared Date" datatype="DateTime" dateformat="Apple Time" category="DateTime" /> 
+	  <Fragment source="TimeZone" alias="TimeZone" datatype="String" category="None" /> 
+	  <Fragment source="ApproximateLocationData" alias="Approximate LocationData" datatype="Attachment" category="None" /> 
+	  <Fragment source="ReverseLocationData0" alias="Reverse LocationData" datatype="String" category="None" />
+      <Fragment source="LocationValid" alias="LocationValid" datatype="String" category="None" />
+	  <Fragment source="ReverseLocationData1" alias="Reverse LocationData 1" datatype="Attachment" category="None" />
+      <Fragment source="LocationValid1" alias="LocationValid" datatype="String" category="None" />
+	  <Fragment source="ReverseLocationData2" alias="Reverse LocationData 2" datatype="Attachment" category="None" />
+    </Fragments>
+  </Artifact>
+  <Artifact type="SqliteArtifact" name="IOS iPhotoLite.db" version="2.1" platform="Ios">
+    <Source type="FileName">iPhotoLite.db</Source>
+    <Query>
+	--IOS 9 (iphoto)
+	--\Camera Roll\Media\PhotoData\iPhotoSandboxLibrary\438665323315681\Database\iPhotoLite.db
+
+	select 
+		BLDBAlbum.uuid as 'AlbumUUID', -- Foldername
+		BLDBAlbumMediaJoin.type, -- value can also be seen in the Album.plist in the above folders
+		BLDBAlbum.name||' ('||BLDBAlbum.itemCount||')' as 'AlbumNamecount',
+		case BLDBAlbum.state 
+			when 1 
+			then 'Exists' 
+			end as 'AlbumState', 
+		case bldbmedia.state 
+			when 0 then 'Deleted'
+			end as 'MediaState',
+		bldbmedia.uuid 'MediaUUID',
+		bldbmedia.fileName,
+		bldbmedia.fileSize,
+		bldbmedia.type as 'imageType',
+		time(bldbmedia.duration,'unixepoch') as 'Duration',
+		bldbmedia.latitude,
+		bldbmedia.longitude,
+		bldbmedia.DateCreated as 'DateCreated',
+		case 
+			when bldbmedia.dateViewed != 0.0 
+			then bldbmedia.dateViewed 
+			end as 'DateViewed',
+		case 
+			when bldbmedia.dateAdjusted 
+			then bldbmedia.dateAdjusted 
+			end as 'DateAdjusted',
+		case 
+			when bldbmedia.dateModified 
+			then bldbmedia.dateModified 
+			end as 'DateModified',
+		bldbmedia.PixelWidth||' x '||bldbmedia.PixelHeight as 'Dimensions',
+		bldbmedia.assetPixelWidth||' x '||bldbmedia.assetPixelHeight as 'assetDimensions',
+		bldbmedia.originalPixelWidth||' x '||bldbmedia.originalPixelHeight as 'originalDimensions',
+		case bldbmedia.assetOrientation    
+				when 1 then 'Horizontal (left)'
+				when 3 then 'Horizontal (right)'
+				when 6 then 'Vertical (up)'
+				when 8 then 'Vertical (down)'
+				else bldbmedia.assetOrientation
+				end as 'AssetOrientation',
+		case bldbmedia.originalOrientation    
+				when 1 then 'Horizontal (left)'
+				when 3 then 'Horizontal (right)'
+				when 6 then 'Vertical (up)'
+				when 8 then 'Vertical (down)'
+				else bldbmedia.originalOrientation
+				end as 'OriginalOrientation'
+	from bldbmedia
+		join BLDBAlbumMediaJoin on BLDBMedia.primaryKey = BLDBAlbumMediaJoin.mediaKey
+		join BLDBAlbum on BLDBAlbumMediaJoin.albumKey = BLDBAlbum.primaryKey
+--	order by DateCreated desc 
+     </Query>
+    <Fragments>
+      <Fragment source="AlbumUUID" alias="Album UUID" datatype="String" category="None" />
+      <Fragment source="type" alias="Type" datatype="String" category="None" />
+      <Fragment source="AlbumNamecount" alias="AlbumName (count)" datatype="String" category="None" />
+      <Fragment source="AlbumState" alias="AlbumState" datatype="String" category="None" />
+      <Fragment source="MediaState" alias="MediaState" datatype="String" category="None" />
+      <Fragment source="MediaUUID" alias="Media UUID" datatype="String" category="None" />
+      <Fragment source="fileName" alias="FileName" datatype="String" category="None" />
+      <Fragment source="fileSize" alias="Filesize" datatype="Integer" category="None" />
+      <Fragment source="imageType" alias="ImageType" datatype="String" category="None" />
+      <Fragment source="Duration" alias="Duration" datatype="String" category="None" />
+      <Fragment source="latitude" alias="Latitude" datatype="Float" category="Latitude" />
+      <Fragment source="longitude" alias="Longitude " datatype="Float" category="Longitude" />
+      <Fragment source="DateCreated" alias="Date Created" datatype="DateTime" dateformat="Apple Time" category="DateTime" />
+      <Fragment source="DateViewed" alias="Date Viewed" datatype="DateTime" dateformat="Apple Time" category="DateTime" />
+      <Fragment source="DateAdjusted" alias="DateA djusted" datatype="DateTime" dateformat="Apple Time" category="DateTime" />
+      <Fragment source="DateModified" alias="Date Modified" datatype="DateTime" dateformat="Apple Time" category="DateTime" />
+      <Fragment source="Dimenasions" alias="Dimensions (WxH)" datatype="String" category="None" />
+      <Fragment source="assetDimensions" alias="Asset Dimensions (WxH)" datatype="String" category="None" />
+      <Fragment source="originalDimensions" alias="Original Dimensions (WxH)" datatype="String" category="None" />
+      <Fragment source="AssetOrientation" alias="Asset Orientation" datatype="String" category="None" />
+      <Fragment source="OriginalOrientation" alias="Original Orientation" datatype="String" category="None" />
+    </Fragments>
+  </Artifact> 
+  <Signature>
+  </Signature>
+</Artifacts>
