@@ -18,7 +18,8 @@
 -- Z_OPT = number of times an entity has been changed
 --
 -- https://linuxsleuthing.blogspot.com/2013/05/ios6-photo-streams-recover-deleted.html
--- https://discussions.apple.com/thread/8184861 
+-- https://discussions.apple.com/thread/8184861
+-- https://www.hackerfactor.com/blog/index.php?/archives/847-Video-Thumbnails.html
 
 select 
 	Z_PRIMARYKEY.Z_NAME as 'Type',
