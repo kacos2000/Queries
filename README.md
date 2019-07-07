@@ -60,5 +60,7 @@
             - ['contacts.data' (Viber Messages)](https://github.com/kacos2000/queries/blob/master/Viber_Contacts_Data_messages.sql)<br> 
             - ['ChatStorage.sqlite' (WhatsApp Messages)](https://github.com/kacos2000/queries/blob/master/WhatsApp_Chatstorage_sqlite.sql)<br> 
             
- 	 	 
- 	
+ 	   - **Windows 10 Apps**     <br>   	 
+ 	          
+            - [Samsung Flow App 'Notifications.db'](https://github.com/kacos2000/queries/blob/master/Samsung_Flow_Notifications_db.sql) - *Note:* dB Files are EFS encrypted <br>
+           
