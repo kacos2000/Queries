@@ -8,7 +8,8 @@
 -- SIDECAR https://en.wikipedia.org/wiki/Sidecar_file
 --
 -- Live Photo is a video-picture hybrid file with both animated MOV and static JPG combined. 
--- https://appletoolbox.com/live-photos-on-iphone-complete-guide/ 
+-- https://appletoolbox.com/live-photos-on-iphone-complete-guide/
+-- https://www.hackerfactor.com/blog/index.php?/archives/847-Video-Thumbnails.html
 -- 
 -- OriginalFilename is the filename used when this was shared in another app
 -- Filename is the IOS converted filename after the above image was saved on the device(iPhone)
