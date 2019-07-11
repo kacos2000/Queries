@@ -23,7 +23,6 @@
 
 
 select 
-	Z_PRIMARYKEY.Z_NAME as 'Type',
 	case zgenericasset.ZSAVEDASSETTYPE
 			when 0 then 'Saved from other source'
 			when 2 then 'Photo Streams Data'
@@ -32,11 +31,15 @@ select
 			when 7 then 'Deleted'
 			else zgenericasset.ZSAVEDASSETTYPE
 			end as 'AssetType',
-	ZDIRECTORY as 'Directory',
-	ZFILENAME as 'FileName',
+	zgenericasset.ZDIRECTORY as 'Directory',
+	zgenericasset.ZFILENAME as 'FileName',
 	ZADDITIONALASSETATTRIBUTES.ZORIGINALFILENAME as 'OriginalFilename',
 	ZADDITIONALASSETATTRIBUTES.ZORIGINALFILESIZE as 'OriginalSize',
-	ZUNIFORMTYPEIDENTIFIER as 'FormTypeIdentifier',
+	zgenericasset.ZUNIFORMTYPEIDENTIFIER as 'FormType',
+	ZSIDECARFILE.ZFILENAME as ' SidecarFilename',
+	ZSIDECARFILE.ZORIGINALFILENAME as 'SidecarOriginalF',
+	ZSIDECARFILE.ZCOMPRESSEDSIZE as ' CompressedSize',
+	ZSIDECARFILE.ZUNIFORMTYPEIDENTIFIER as 'SidecarFormType',
 	ZIMAGEURLDATA as 'ImageURLdata',
 	ZTHUMBNAILURLDATA as 'ThumbnailURLdata',
 	case ZCLOUDDOWNLOADREQUESTS
@@ -85,12 +88,6 @@ select
 			when 102 then 'Timelapse'
 			else ZKINDSUBTYPE
 			end as 'SubType',
-	case zgenericasset.ZHIGHDYNAMICRANGETYPE 
-		when 0 then 'No HDR'
-		when 1 then 'Low'
-		when 6 then 'High'
-		else zgenericasset.ZHIGHDYNAMICRANGETYPE
-		end as 'HDRtype', --Seen values 0, 1 and 6
 	case zgenericasset.ZTRASHEDSTATE     
 			when 1 then 'Deleted'
 			when 0 then 'Not Deleted'
@@ -109,8 +106,10 @@ select
 	ZADDITIONALASSETATTRIBUTES.ZCREATORBUNDLEID as 'CreatorBundleID',
 	ZADDITIONALASSETATTRIBUTES.ZEDITORBUNDLEID as 'EditorBundleID',
 	ZUNMANAGEDADJUSTMENT.ZADJUSTMENTFORMATIDENTIFIER||' ('||ZUNMANAGEDADJUSTMENT.ZADJUSTMENTFORMATVERSION||')' as 'AdjustmentFormatIdentifier',
+	datetime('2001-01-01', ZSIDECARFILE.ZCAPTUREDATE || ' seconds') as 'SidecarCaptudeDate',
+	datetime('2001-01-01', ZSIDECARFILE.ZMODIFICATIONDATE || ' seconds') as 'SidecarModificationDate',
 	datetime('2001-01-01', ZUNMANAGEDADJUSTMENT.ZADJUSTMENTTIMESTAMP || ' seconds') as 'AdjustmentTimestamp',
-	datetime('2001-01-01', zgenericasset.ZMODIFICATIONDATE || ' seconds') as 'ModificationDate',
+	datetime('2001-01-01', ZGENERICASSET.ZMODIFICATIONDATE || ' seconds') as 'ModificationDate',
 	datetime('2001-01-01', ZADDEDDATE || ' seconds') as 'AddedDate',
 	datetime('2001-01-01', ZDATECREATED || ' seconds') as 'CreatedDate',
 	ZADDITIONALASSETATTRIBUTES.ZEXIFTIMESTAMPSTRING as 'EXIFtimestamp',
@@ -130,17 +129,12 @@ select
 		when 1 then 'Yes'
 		end as 'LocationValid',
 	ZADDITIONALASSETATTRIBUTES.ZREVERSELOCATIONDATA as 'ReverseLocationData2(bplist)'
-	-- ,	
-	-- case ZADDITIONALASSETATTRIBUTES.ZSHIFTEDLOCATIONISVALID -- Field does not exist in IOS 8.3 (remove "--" for other versions)
-	--	when 0 then 'No'
-	--	when 1 then 'Yes'
-	--	end as 'ShiftedLocationValid'
-	
 from zgenericasset
 	join Z_PRIMARYKEY on zgenericasset.z_ent = Z_PRIMARYKEY.z_ent
 	left join ZMOMENTLIST on zgenericasset.ZMOMENT = ZMOMENTLIST.Z_PK
 	left join ZMOMENT on ZGENERICASSET."ZMOMENT" = ZMOMENT.Z_PK
 	join ZADDITIONALASSETATTRIBUTES on ZGENERICASSET.ZADDITIONALATTRIBUTES = ZADDITIONALASSETATTRIBUTES.Z_PK
 	left join ZUNMANAGEDADJUSTMENT on ZADDITIONALASSETATTRIBUTES."ZUNMANAGEDADJUSTMENT" = ZUNMANAGEDADJUSTMENT.Z_PK
+	left join ZSIDECARFILE on ZSIDECARFILE.ZASSET = ZGENERICASSET.Z_PK
 order by CreatedDate desc
 
