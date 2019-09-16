@@ -52,6 +52,7 @@
             - [IOS 'iPhotoLite.db'](https://github.com/kacos2000/queries/blob/master/iPhotoLitedb.sql)<br>
             - [IOS 'healthdb.sqlite'](https://github.com/kacos2000/queries/blob/master/healthdb.sql)<br>
             - [IOS 'healthdb_secure.sqlite'](https://github.com/kacos2000/queries/blob/master/healthdb_secure.sql)<br>
+            - [IOS 'knowledgec.db'](https://github.com/kacos2000/queries/blob/master/knowledgec_db.sql)<br>
             - [IOS 'notes.sqlite'](https://github.com/kacos2000/queries/blob/master/notes_sqlite.sql)<br>
             - [IOS 'Recents' db (Mail)](https://github.com/kacos2000/queries/blob/master/recents.sql)<br>
             - [IOS 'sms.db' (SMS/iMessages)](https://github.com/kacos2000/queries/blob/master/sms_db.sql)<br>
