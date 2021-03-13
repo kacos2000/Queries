@@ -64,5 +64,5 @@
  	   - **Windows 10 Apps**     <br>   	 
  	          
             - [Samsung Flow App 'Notifications.db'](https://github.com/kacos2000/queries/blob/master/Samsung_Flow_Notifications_db.sql) - *Note:* dB Files are EFS encrypted <br>
-            - [Encapsulation.db found at 'C:\Windows\appcompat\encapsulation\Encapsulation.db'](https://github.com/kacos2000/Queries/blob/master/Encapsulationdb.sql)
+            - [Encapsulation.db](https://github.com/kacos2000/Queries/blob/master/Encapsulationdb.sql) found at 'C:\Windows\appcompat\encapsulation\Encapsulation.db'
            
