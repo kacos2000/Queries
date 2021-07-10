@@ -69,4 +69,5 @@
   from 'C:\ProgramData\Microsoft\Diagnosis\EventTranscript\EventTranscript.db' ([more info here](https://github.com/rathbuna/EventTranscript.db-Research))  
             - [ClipboardHistory](https://github.com/kacos2000/Queries/blob/master/ClipboardHistory.Service.sql) <br>
             - [SoftwareUpdateClientTelemetry](https://github.com/kacos2000/Queries/blob/master/SoftwareUpdateClientTelemetry.sql) <br> 
+            - [Edge & Apps WebHistory](https://github.com/kacos2000/Queries/blob/master/Aria_WebBrowser.sql) <br> 
            
