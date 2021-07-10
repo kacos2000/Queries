@@ -1,4 +1,4 @@
--- Diagnistic ClipboardHistory
+-- Diagnostic ClipboardHistory
 -- from C:\ProgramData\Microsoft\Diagnosis\EventTranscript\EventTranscript.db
 
 SELECT
