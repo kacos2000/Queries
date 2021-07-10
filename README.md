@@ -65,5 +65,5 @@
  	          
             - [Samsung Flow App 'Notifications.db'](https://github.com/kacos2000/queries/blob/master/Samsung_Flow_Notifications_db.sql) - *Note:* dB Files are EFS encrypted <br>
             - [Encapsulation.db](https://github.com/kacos2000/Queries/blob/master/Encapsulationdb.sql) found at 'C:\Windows\appcompat\encapsulation\Encapsulation.db'
-            - [ClipboardHistory](https://github.com/kacos2000/Queries/blob/master/ClipboardHistory.Service.AddItemActivity.sql) from 'C:\ProgramData\Microsoft\Diagnosis\EventTranscript\EventTranscript.db' ([more info here](https://github.com/rathbuna/EventTranscript.db-Research))
+            - [ClipboardHistory](https://github.com/kacos2000/Queries/blob/master/ClipboardHistory.Service.sql) from 'C:\ProgramData\Microsoft\Diagnosis\EventTranscript\EventTranscript.db' ([more info here](https://github.com/rathbuna/EventTranscript.db-Research))
            
