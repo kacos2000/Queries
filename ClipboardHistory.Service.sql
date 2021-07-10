@@ -6,9 +6,9 @@
 SELECT
 
 --Timestamp from db field
-json_extract(events_persisted.payload,'$.time') as 'Time',
+json_extract(events_persisted.payload,'$.time') as 'UTC TimeStamp',
 -- Timestamp from json payload
-datetime((timestamp - 116444736000000000)/10000000, 'unixepoch') as 'Payload UTC TimeStamp',
+datetime((timestamp - 116444736000000000)/10000000, 'unixepoch','localtime') as 'Local TimeStamp',
 json_extract(events_persisted.payload,'$.ext.loc.tz') as 'TimeZome',
 json_extract(events_persisted.payload,'$.data.Origin') as 'Origin',
 
