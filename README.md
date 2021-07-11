@@ -72,4 +72,5 @@
             - [Edge & Apps WebHistory](https://github.com/kacos2000/Queries/blob/master/Microsoft.WebBrowser.sql) <br> 
             - [Software Update client telemtry](https://github.com/kacos2000/Queries/blob/master/SoftwareUpdateClientTelemetry.sql) <br>
             - [Virtual Desktop](https://github.com/kacos2000/Queries/blob/master/VirtualDesktop.sql) <br>
+            - [YourPhone app](https://github.com/kacos2000/Queries/blob/master/MobilityExperience.YourPhone.sql) <br>
            
