@@ -1,4 +1,8 @@
--- Diagnostic Microsoft.OneCore.NetworkingTriage
+-- Diagnostic 
+--		Microsoft.OneCore.NetworkingTriage
+--      Microsoft.Windows.Networking.DHCP
+--      Microsoft.Windows.Networking.DNS
+--
 -- from C:\ProgramData\Microsoft\Diagnosis\EventTranscript\EventTranscript.db
 -- For more info visit https://github.com/rathbuna/EventTranscript.db-Research
 
@@ -12,7 +16,7 @@ json_extract(events_persisted.payload,'$.ext.loc.tz') as 'TimeZome',
 json_extract(events_persisted.payload,'$.ext.utc.seq') as 'seq',
 
 -- events
-replace(replace(replace(full_event_name,'Microsoft.OneCore.NetworkingTriage.GetConnected.',''),'Microsoft.Windows.Networking.DHCP.',''),'Microsoft.Windows.Networking.DHCPv6.','') as 'Event',
+replace(replace(replace(replace(full_event_name,'Microsoft.OneCore.NetworkingTriage.GetConnected.',''),'Microsoft.Windows.Networking.DHCP.',''),'Microsoft.Windows.Networking.DHCPv6.',''),'Microsoft.Windows.Networking.DNS.','') as 'Event',
 json_extract(events_persisted.payload,'$.data.eventSource') as 'Event Source',
 coalesce(json_extract(events_persisted.payload,'$.data.reason'),json_extract(events_persisted.payload,'$.data.eventSource')) as 'Event Reason',
 json_extract(events_persisted.payload,'$.data.previousReason') as 'Rrevious Reason',
@@ -76,6 +80,9 @@ json_extract(events_persisted.payload,'$.data.NextHop') as 'NextHop', -- usually
 json_extract(events_persisted.payload,'$.data.Dest') as 'Dest',
 json_extract(events_persisted.payload,'$.data.DestMask') as 'DestMask',
 
+-- DNS Servers
+json_extract(events_persisted.payload,'$.data.DnsServers') as 'DnsServers',
+
 -- Tracking:
 
 -- Local Interface name
@@ -91,7 +98,10 @@ logging_binary_name
 
 
 from events_persisted 
-where (events_persisted.full_event_name like 'Microsoft.OneCore.NetworkingTriage.%' or events_persisted.full_event_name like 'Microsoft.Windows.Networking.DHCP%')
+where 
+  (events_persisted.full_event_name like 'Microsoft.OneCore.NetworkingTriage.%' 
+or events_persisted.full_event_name like 'Microsoft.Windows.Networking.DHCP%' 
+or events_persisted.full_event_name like 'Microsoft.Windows.Networking.DNS.DnsServerConfig%')
 and events_persisted.full_event_name not like '%DiscoveryAttempt%'
 and events_persisted.full_event_name not like '%MediaConnected%'
 and events_persisted.full_event_name not like '%DhcpSetEventInRenewState%'
