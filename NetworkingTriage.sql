@@ -14,7 +14,7 @@ json_extract(events_persisted.payload,'$.ext.utc.seq') as 'seq',
 -- events
 replace(replace(replace(full_event_name,'Microsoft.OneCore.NetworkingTriage.GetConnected.',''),'Microsoft.Windows.Networking.DHCP.',''),'Microsoft.Windows.Networking.DHCPv6.','') as 'Event',
 json_extract(events_persisted.payload,'$.data.eventSource') as 'Event Source',
-coalesce(json_extract(events_persisted.payload,'$.data.reason'),json_extract(events_persisted.payload,'$.data.eventSource')) as 'Reason',
+coalesce(json_extract(events_persisted.payload,'$.data.reason'),json_extract(events_persisted.payload,'$.data.eventSource')) as 'Event Reason',
 json_extract(events_persisted.payload,'$.data.previousReason') as 'Rrevious Reason',
 json_extract(events_persisted.payload,'$.data.nextHopAddress') as 'nextHopAddress',
 
@@ -91,7 +91,7 @@ logging_binary_name
 
 
 from events_persisted 
-where (events_persisted.full_event_name like 'Microsoft.OneCore.NetworkingTriage.%' or events_persisted.full_event_name like 'Microsoft.Windows.Networking.DHCP.%')
+where (events_persisted.full_event_name like 'Microsoft.OneCore.NetworkingTriage.%' or events_persisted.full_event_name like 'Microsoft.Windows.Networking.DHCP%')
 and events_persisted.full_event_name not like '%DiscoveryAttempt%'
 and events_persisted.full_event_name not like '%MediaConnected%'
 and events_persisted.full_event_name not like '%DhcpSetEventInRenewState%'
