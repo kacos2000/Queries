@@ -21,8 +21,11 @@ coalesce(json_extract(events_persisted.payload,'$.data.HostName'),json_extract(e
 json_extract(events_persisted.payload,'$.data.EventInstanceID') as 'EventInstanceID',
 json_extract(events_persisted.payload,'$.ext.utc.pgName') as 'pgName',
 json_extract(events_persisted.payload,'$.ext.utc.loggingBinary') as 'loggingBinary',
+
+json_extract(events_persisted.payload,'$.data.EventScenario') as 'Status',
+
 -- user
-trim(json_extract(events_persisted.payload,'$.ext.user.localId'),'m:') as 'UserId',
+json_extract(events_persisted.payload,'$.data.ApplicableUpdateInfo') as 'ApplicableUpdateInfo',
 events_persisted.sid as 'User SID'
 
 FROM events_persisted
