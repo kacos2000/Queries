@@ -20,11 +20,14 @@ coalesce(json_extract(events_persisted.payload,'$.data.navigationUrl'),json_extr
 json_extract(events_persisted.payload,'$.data.actionName') as 'actionName',
 
 logging_binary_name,
+
 -- Net info
 coalesce(json_extract(events_persisted.payload,'$.ext.net.type'),json_extract(events_persisted.payload,'$.data.ConnectionType')) as 'type',
 json_extract(events_persisted.payload,'$.ext.net.cost') as 'cost',
--- user sid
-events_persisted.sid as 'User SID'
+
+-- Local, MS or AAD account 
+trim(json_extract(events_persisted.payload,'$.ext.user.localId'),'m:') as 'UserId',
+sid as 'User SID'
 
 
 from events_persisted 
