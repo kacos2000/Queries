@@ -9,7 +9,7 @@ select
 json_extract(events_persisted.payload,'$.time') as 'UTC TimeStamp',
 -- Timestamp from json payload
 datetime((timestamp - 116444736000000000)/10000000, 'unixepoch','localtime') as 'Local TimeStamp',
-
+json_extract(events_persisted.payload,'$.ext.utc.seq') as 'seq',
 -- Actions
 replace(replace(events_persisted.full_event_name,'Microsoft.Windows.MobilityExperience.YourPhone.',''),'YPP.','') as 'Event',
 replace(replace(json_extract(events_persisted.payload,'$.data.traceState'),'ypScenarioId=',''),',ypTriggerId=',': ') as 'traceState', 
