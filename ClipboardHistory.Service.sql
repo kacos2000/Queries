@@ -1,4 +1,11 @@
 -- Diagnostic ClipboardHistory
+-- Included events:
+-- 'Microsoft.Windows.ClipboardHistory.Service.CopyActionDetected_Compliant',
+-- 'Microsoft.Windows.ClipboardHistory.Service.PasteActionDetected_Compliant',
+-- 'Microsoft.Windows.ClipboardHistory.Service.AddItemActivity',
+-- 'Microsoft.WindowsInternal.ComposableShell.Experiences.SuggestionUI.ClipboardHistoryChangeDetected',
+-- 'Microsoft.WindowsInternal.ComposableShell.Experiences.SuggestionUI.ClipboardUpdateDetected'
+--
 -- from C:\ProgramData\Microsoft\Diagnosis\EventTranscript\EventTranscript.db
 -- For more info visit https://github.com/rathbuna/EventTranscript.db-Research
 
@@ -10,6 +17,7 @@ json_extract(events_persisted.payload,'$.time') as 'UTC TimeStamp',
 -- Timestamp from json payload
 datetime((timestamp - 116444736000000000)/10000000, 'unixepoch','localtime') as 'Local TimeStamp',
 json_extract(events_persisted.payload,'$.ext.loc.tz') as 'TimeZome',
+json_extract(events_persisted.payload,'$.ext.utc.seq') as 'seq',
 json_extract(events_persisted.payload,'$.data.Origin') as 'Origin',
 
 case json_extract(events_persisted.payload,'$.data.IsCurrentClipboardData') 
@@ -19,9 +27,10 @@ case json_extract(events_persisted.payload,'$.data.IsCurrentClipboardData')
 producers.producer_id_text as 'Producer',
 
 -- Actions
-replace(replace(replace(replace(full_event_name,'Microsoft.Windows.ClipboardHistory.Service.',''),'_Compliant',''),'Detected',''),'Activity','') as 'Event',
-coalesce(json_extract(events_persisted.payload,'$.data.sourceApplicationName'),json_extract(events_persisted.payload,'$.data.SourceApplicationName')) as 'Copy Source',
+replace(replace(replace(replace(replace(full_event_name,'Microsoft.Windows.ClipboardHistory.Service.',''),'_Compliant',''),'Detected',''),'Activity',''),'Microsoft.WindowsInternal.ComposableShell.Experiences.SuggestionUI.','') as 'Event',
+coalesce(json_extract(events_persisted.payload,'$.data.sourceApplicationName'),json_extract(events_persisted.payload,'$.data.SourceApplicationName'),json_extract(events_persisted.payload,'$.data.AppExecutableName')) as 'Copy Source',
 json_extract(events_persisted.payload,'$.data.targetApplicationName') as 'Paste Target',
+json_extract(events_persisted.payload,'$.data.TargetProcessId') as 'Target pid',
 
 -- JSON of copied items info
 case  
@@ -41,21 +50,29 @@ trim(coalesce(json_extract(events_persisted.payload,'$.data.ItemId'),json_extrac
 
 -- Local, MS or AAD account 
 trim(json_extract(events_persisted.payload,'$.ext.user.localId'),'m:') as 'UserId',
-sid as 'SID',
-json_extract(events_persisted.payload,'$.ext.os.name') as 'OS',
+sid as 'User SID',
+
+
 -- Device class (same as the type used in ActivitiesCache.db
 TRIM(json_extract(events_persisted.payload,'$.ext.device.deviceClass'),'Windows.') as 'Device Class',
 -- json_extract(events_persisted.payload,'$.ext.device.localId') as 'localId',
 
 -- Device info from registry
+json_extract(events_persisted.payload,'$.ext.os.name') as 'OS',
 json_extract(events_persisted.payload,'$.ext.protocol.devMake') as 'Device Make',
 json_extract(events_persisted.payload,'$.ext.protocol.devModel') as 'Device Model',
 logging_binary_name
 
 from events_persisted 
 join producers on producers.producer_id = events_persisted.producer_id
-
-where events_persisted.full_event_name in ('Microsoft.Windows.ClipboardHistory.Service.CopyActionDetected_Compliant','Microsoft.Windows.ClipboardHistory.Service.PasteActionDetected_Compliant','Microsoft.Windows.ClipboardHistory.Service.AddItemActivity')
+-- include events:
+where events_persisted.full_event_name in 
+('Microsoft.Windows.ClipboardHistory.Service.CopyActionDetected_Compliant',
+'Microsoft.Windows.ClipboardHistory.Service.PasteActionDetected_Compliant',
+'Microsoft.Windows.ClipboardHistory.Service.AddItemActivity',
+'Microsoft.WindowsInternal.ComposableShell.Experiences.SuggestionUI.ClipboardHistoryChangeDetected',
+'Microsoft.WindowsInternal.ComposableShell.Experiences.SuggestionUI.ClipboardUpdateDetected')
+-- Sort by date descending (newest first)
 order by events_persisted.timestamp desc
 
 
