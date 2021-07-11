@@ -12,11 +12,12 @@ json_extract(events_persisted.payload,'$.ext.loc.tz') as 'TimeZome',
 json_extract(events_persisted.payload,'$.ext.utc.seq') as 'seq',
 
 -- events
-replace(full_event_name,'Microsoft.OneCore.NetworkingTriage.GetConnected.','') as 'Event',
+replace(replace(replace(full_event_name,'Microsoft.OneCore.NetworkingTriage.GetConnected.',''),'Microsoft.Windows.Networking.DHCP.',''),'Microsoft.Windows.Networking.DHCPv6.','') as 'Event',
 json_extract(events_persisted.payload,'$.data.eventSource') as 'Event Source',
 coalesce(json_extract(events_persisted.payload,'$.data.reason'),json_extract(events_persisted.payload,'$.data.eventSource')) as 'Reason',
 json_extract(events_persisted.payload,'$.data.previousReason') as 'Rrevious Reason',
 json_extract(events_persisted.payload,'$.data.nextHopAddress') as 'nextHopAddress',
+
 
 -- Info
 coalesce(json_extract(events_persisted.payload,'$.data.apPhyType'),json_extract(events_persisted.payload,'$.data.family')) as 'Type',
@@ -45,9 +46,42 @@ json_extract(events_persisted.payload,'$.data.cipherAlgo') as 'EncrType',
 json_extract(events_persisted.payload,'$.data.bssid') as 'bssid',
 json_extract(events_persisted.payload,'$.data.firstBSSID') as 'firstBSSID',
 
+-- DHCP
+json_extract(events_persisted.payload,'$.data.DhcpMode') as 'DhcpMode', 
+case json_extract(events_persisted.payload,'$.data.GotOffer') 
+	when 0 then 'No'
+	when 1 then 'Yes'
+	else json_extract(events_persisted.payload,'$.data.GotOffer')
+	end as 'GotOffer', 
+case json_extract(events_persisted.payload,'$.data.DisableDhcpSet') 
+	when 0 then 'No'
+	when 1 then 'Yes'
+	end as 'DisableDhcpSet', 	
+case json_extract(events_persisted.payload,'$.data.DhcpIsInitState') 
+	when 0 then 'No'
+	when 1 then 'Yes'
+	else json_extract(events_persisted.payload,'$.data.DhcpIsInitState')
+	end as 'DhcpIsInitState', 
+
+case json_extract(events_persisted.payload,'$.data.DhcpGlobalUseNetworkHint') 
+	when 0 then 'No'
+	when 1 then 'Yes'
+	end as 'DhcpGlobalUseNetworkHint', 
+	case json_extract(events_persisted.payload,'$.data.LeaseObtained')
+		when 0 then 'No'
+		else time(json_extract(events_persisted.payload,'$.data.LeaseObtained'),'unixepoch')
+		end as 'LeaseObtained', -- in seconds
+time(json_extract(events_persisted.payload,'$.data.LeaseTime'),'unixepoch') as 'LeaseTime', -- in seconds (converted to HH:MM:SS)
+json_extract(events_persisted.payload,'$.data.NextHop') as 'NextHop', -- usually the Router IP
+json_extract(events_persisted.payload,'$.data.Dest') as 'Dest',
+json_extract(events_persisted.payload,'$.data.DestMask') as 'DestMask',
+
+-- Tracking:
+
 -- Local Interface name
 json_extract(events_persisted.payload,'$.data.interfaceDescription') as 'Interface',
 json_extract(events_persisted.payload,'$.data.interfaceGuid') as 'interfaceGuid',
+json_extract(events_persisted.payload,'$.data.SessionTrackingGuid') as 'Session',
 
 -- Local, MS or AAD account 
 trim(json_extract(events_persisted.payload,'$.ext.user.localId'),'m:') as 'UserId',
@@ -57,5 +91,11 @@ logging_binary_name
 
 
 from events_persisted 
-where events_persisted.full_event_name like 'Microsoft.OneCore.NetworkingTriage.%'
+where (events_persisted.full_event_name like 'Microsoft.OneCore.NetworkingTriage.%' or events_persisted.full_event_name like 'Microsoft.Windows.Networking.DHCP.%')
+and events_persisted.full_event_name not like '%DiscoveryAttempt%'
+and events_persisted.full_event_name not like '%MediaConnected%'
+and events_persisted.full_event_name not like '%DhcpSetEventInRenewState%'
+and events_persisted.full_event_name not like '%SolicitAttempt%'
+and events_persisted.full_event_name not like '%InterfaceCapabilityChangedEvent%'
+
 order by events_persisted.timestamp desc
