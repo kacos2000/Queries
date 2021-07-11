@@ -11,6 +11,7 @@ json_extract(events_persisted.payload,'$.time') as 'UTC TimeStamp',
 datetime((timestamp - 116444736000000000)/10000000, 'unixepoch','localtime') as 'Local TimeStamp',
 
 json_extract(events_persisted.payload,'$.ext.utc.seq') as 'seq',
+json_extract(events_persisted.payload,'$.data.wilActivity.threadId') as 'threadId',
 replace(replace(replace(events_persisted.full_event_name,'Microsoft-Windows-Desktop-Shell-Windowing.',''),'VirtualDesktop',''),'Microsoft.Windows.Shell.Switcher.','') as 'Event',
 json_extract(events_persisted.payload,'$.ext.metadata.f.desktopId') as 'desktopId',
 coalesce(json_extract(events_persisted.payload,'$.data.newDesktopId'),json_extract(events_persisted.payload,'$.data.desktopId')) as 'Current DesktopId',
