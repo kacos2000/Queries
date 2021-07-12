@@ -30,15 +30,20 @@ case when substr(json_extract(events_persisted.payload,'$.data.AppId'),1,1) is '
 	 else json_extract(events_persisted.payload,'$.data.AppId') -- just in case ..
 	 end as 'AppId',
 
--- Version of the application that produced this event	 
+-- Version of the application that produced this event	
 case when substr(json_extract(events_persisted.payload,'$.data.AppId'),1,1) is 'W' -- Windows Application x32/x64
 	then substr(json_extract(events_persisted.payload,'$.data.AppVersion'),1,19 ) 
 	end as 'AppVersion Date',   -- Same as the 'LinkDate' in Amcache.hve (Root\InventoryApplicationFile\)	 
 
 case when substr(json_extract(events_persisted.payload,'$.data.AppId'),1,1) is 'W' -- Windows Application x32/x64
 	then substr(json_extract(events_persisted.payload,'$.data.AppVersion'),21,(instr(substr(json_extract(events_persisted.payload,'$.data.AppVersion'),21),'!')-1) )
-	end as 'CRC(?)',	-- variable size (4-6)
+	end as 'PE Header CheckSum',	-- PE Header CheckSum variable size (4-6)
 
+case substr(json_extract(events_persisted.payload,'$.data.AppId'),1,1) 
+	when 'W' then 'Win' -- Windows Application x32/x64
+	when 'U' then 'UWP' -- Universal Windows App (UWP)
+	end as 'Type',	
+	
 case when substr(json_extract(events_persisted.payload,'$.data.AppId'),1,1) is 'W' -- Windows Application x32/x64
 	then substr(json_extract(events_persisted.payload,'$.data.AppVersion'),(instr(substr(json_extract(events_persisted.payload,'$.data.AppVersion'),22),'!')+22)) 
 	else json_extract(events_persisted.payload,'$.data.AppVersion')
