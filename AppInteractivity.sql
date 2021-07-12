@@ -2,9 +2,12 @@
 --		Win32kTraceLogging.AppInteractivitySummary
 --
 -- from C:\ProgramData\Microsoft\Diagnosis\EventTranscript\EventTranscript.db
--- For more info visit https://github.com/rathbuna/EventTranscript.db-Research
+-- For more info visit https://github.com/rathbuna/EventTranscript.db-Research 
+-- https://docs.microsoft.com/en-us/windows/privacy/enhanced-diagnostic-data-windows-analytics-events-and-fields
+-- https://arxiv.org/ftp/arxiv/papers/2002/2002.12506.pdf
 -- and "Forensic Quick Wins With EventTranscript.DB: Win32kTraceLogging" at
 -- https://www.kroll.com/en/insights/publications/cyber/forensically-unpacking-eventtranscript/forensic-quick-wins-with-eventtranscript
+
 
 SELECT
 
@@ -17,8 +20,8 @@ json_extract(events_persisted.payload,'$.ext.utc.seq') as 'seq',
 
 -- events
 json_extract(events_persisted.payload,'$.data.EventSequence') as 'EventSequence',
-json_extract(events_persisted.payload,'$.data.AggregationStartTime') as 'AggregationStartTime',
-time(json_extract(events_persisted.payload,'$.data.AggregationDurationMS'),'unixepoch') as 'AggregationDuration', -- in Milliseconds
+json_extract(events_persisted.payload,'$.data.AggregationStartTime') as 'AggregationStartTime', -- Start date and time of AppInteractivity aggregation
+time(json_extract(events_persisted.payload,'$.data.AggregationDurationMS'),'unixepoch') as 'AggregationDuration', -- Actual duration of aggregation period (in milliseconds)
 -- App name
 case when substr(json_extract(events_persisted.payload,'$.data.AppId'),1,1) is 'W' -- Windows Application x32/x64
 	 then substr(json_extract(events_persisted.payload,'$.data.AppId'),93)
@@ -26,7 +29,8 @@ case when substr(json_extract(events_persisted.payload,'$.data.AppId'),1,1) is '
 	 then substr(json_extract(events_persisted.payload,'$.data.AppId'),3)
 	 else json_extract(events_persisted.payload,'$.data.AppId') -- just in case ..
 	 end as 'AppId',
-	 
+
+-- Version of the application that produced this event	 
 case when substr(json_extract(events_persisted.payload,'$.data.AppId'),1,1) is 'W' -- Windows Application x32/x64
 	then substr(json_extract(events_persisted.payload,'$.data.AppVersion'),1,19 ) 
 	end as 'AppVersion Date',	 
@@ -44,14 +48,14 @@ case when substr(json_extract(events_persisted.payload,'$.data.AppId'),1,1) is '
 json_extract(events_persisted.payload,'$.data.WindowWidth')||'x'||json_extract(events_persisted.payload,'$.data.WindowHeight') as 'WindowSize(WxH)',	
 	
 -- Activity Durations in HH:MM::SS except MouseInputSec
-json_extract(events_persisted.payload,'$.data.MouseInputSec') as 'MouseInputSec', -- In Seconds
-time(json_extract(events_persisted.payload,'$.data.InFocusDurationMS'),'unixepoch') as 'InFocusDuration', -- in Milliseconds
-time(json_extract(events_persisted.payload,'$.data.UserActiveDurationMS'),'unixepoch') as 'UserActiveDuration', -- in Milliseconds
+json_extract(events_persisted.payload,'$.data.MouseInputSec') as 'MouseInputSec', -- Total number of seconds during which there was mouse input (In Seconds)
+time(json_extract(events_persisted.payload,'$.data.InFocusDurationMS'),'unixepoch') as 'InFocusDuration', -- Total time (in milliseconds) the application had focus
+time(json_extract(events_persisted.payload,'$.data.UserActiveDurationMS'),'unixepoch') as 'UserActiveDuration', -- Total time that the user was active including all input methods
 time(json_extract(events_persisted.payload,'$.data.SinceFirstInteractivityMS'),'unixepoch') as 'SinceFirstInteractivity', -- in Milliseconds
-time(json_extract(events_persisted.payload,'$.data.UserOrDisplayActiveDurationMS'),'unixepoch') as 'UserOrDisplayActiveDuration', -- in Milliseconds
+time(json_extract(events_persisted.payload,'$.data.UserOrDisplayActiveDurationMS'),'unixepoch') as 'UserOrDisplayActiveDuration', -- Total time the user was using the display
 
 -- Focus
-json_extract(events_persisted.payload,'$.data.FocusLostCount') as 'FocusLostCount',
+json_extract(events_persisted.payload,'$.data.FocusLostCount') as 'FocusLostCount', -- Number of times that an app lost focus during the aggregation period
 
 -- Tracking
 case when substr(json_extract(events_persisted.payload,'$.data.AppId'),1,1) is 'W'	-- Windows Application x32/x64
