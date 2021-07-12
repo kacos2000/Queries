@@ -74,4 +74,5 @@
             - [YourPhone app](https://github.com/kacos2000/Queries/blob/master/MobilityExperience.YourPhone.sql) <br>
             - [Windows.Networking](https://github.com/kacos2000/Queries/blob/master/Windows.Networking.sql) <br>
             - [**NetworkingTriage**](https://github.com/kacos2000/Queries/blob/master/NetworkingTriage.sql)  *(includes info from Windows.Networking)*<br>
+            - [**AppInteractivity**](https://github.com/kacos2000/Queries/blob/master/AppInteractivity.sql)  *(more info [here](https://www.kroll.com/en/insights/publications/cyber/forensically-unpacking-eventtranscript/forensic-quick-wins-with-eventtranscript))*<br>
            
