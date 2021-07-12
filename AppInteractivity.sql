@@ -1,4 +1,5 @@
 -- Diagnostic 
+--      Win32kTraceLogging.AppInteractivity &
 --		Win32kTraceLogging.AppInteractivitySummary
 --
 -- from C:\ProgramData\Microsoft\Diagnosis\EventTranscript\EventTranscript.db
@@ -30,6 +31,16 @@ case when substr(json_extract(events_persisted.payload,'$.data.AppId'),1,1) is '
 	 else json_extract(events_persisted.payload,'$.data.AppId') -- just in case ..
 	 end as 'AppId',
 
+-- Focus
+case json_extract(events_persisted.payload,'$.data.FocusState') 
+	when 0 then 'Back'
+	when 1 then 'In Focus'
+	else json_extract(events_persisted.payload,'$.data.FocusState') 
+	end as 'FocusState',
+time(json_extract(events_persisted.payload,'$.data.FocusDurationMS'),'unixepoch') as 'FocusDuration',
+json_extract(events_persisted.payload,'$.data.FocusLostCount') as 'FocusLostCount', -- Number of times that an app lost focus during the aggregation period
+	 
+	 
 -- Version of the application that produced this event	
 case when substr(json_extract(events_persisted.payload,'$.data.AppId'),1,1) is 'W' -- Windows Application x32/x64
 	then substr(json_extract(events_persisted.payload,'$.data.AppVersion'),1,19 ) 
@@ -53,6 +64,7 @@ case when substr(json_extract(events_persisted.payload,'$.data.AppId'),1,1) is '
 json_extract(events_persisted.payload,'$.data.WindowWidth')||'x'||json_extract(events_persisted.payload,'$.data.WindowHeight') as 'WindowSize(WxH)',	
 	
 -- Activity Durations in HH:MM::SS except MouseInputSec
+time(json_extract(events_persisted.payload,'$.data.FocusDurationMS'),'unixepoch') as 'FocusDuration',
 json_extract(events_persisted.payload,'$.data.MouseInputSec') as 'MouseInputSec', -- Total number of seconds during which there was mouse input (In Seconds)
 time(json_extract(events_persisted.payload,'$.data.InFocusDurationMS'),'unixepoch') as 'InFocusDuration', -- Total time (in milliseconds) the application had focus
 time(json_extract(events_persisted.payload,'$.data.UserActiveDurationMS'),'unixepoch') as 'UserActiveDuration', -- Total time that the user was active including all input methods
@@ -86,7 +98,8 @@ logging_binary_name
 from events_persisted 
 where 
 -- include events:
-  events_persisted.full_event_name like 'Win32kTraceLogging.AppInteractivitySummary%' 
+  events_persisted.full_event_name in ('Win32kTraceLogging.AppInteractivity','Win32kTraceLogging.AppInteractivitySummary' )
+
 
   
  -- Sort by date descending (newest first)
