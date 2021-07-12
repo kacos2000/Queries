@@ -33,7 +33,7 @@ case when substr(json_extract(events_persisted.payload,'$.data.AppId'),1,1) is '
 -- Version of the application that produced this event	 
 case when substr(json_extract(events_persisted.payload,'$.data.AppId'),1,1) is 'W' -- Windows Application x32/x64
 	then substr(json_extract(events_persisted.payload,'$.data.AppVersion'),1,19 ) 
-	end as 'AppVersion Date',	 
+	end as 'AppVersion Date',   -- Same as the 'LinkDate' in Amcache.hve (Root\InventoryApplicationFile\)	 
 
 case when substr(json_extract(events_persisted.payload,'$.data.AppId'),1,1) is 'W' -- Windows Application x32/x64
 	then substr(json_extract(events_persisted.payload,'$.data.AppVersion'),21,(instr(substr(json_extract(events_persisted.payload,'$.data.AppVersion'),21),'!')-1) )
@@ -59,12 +59,13 @@ json_extract(events_persisted.payload,'$.data.FocusLostCount') as 'FocusLostCoun
 
 -- Tracking
 case when substr(json_extract(events_persisted.payload,'$.data.AppId'),1,1) is 'W'	-- Windows Application x32/x64
-	 then upper(substr(json_extract(events_persisted.payload,'$.data.AppId'),52,40)) 
-	 end as 'SHA1',	-- (SHA1 Base16) checked & verified
+	 then upper(substr(json_extract(events_persisted.payload,'$.data.AppId'),52,40)) -- (removed 0x0000 from the start of the hash)
+	 -- Same as the 'FileId' in Amcache.hve (Root\InventoryApplicationFile\)
+	 end as 'SHA1',	-- (SHA1 Base16) checked & verified 
 
 case when substr(json_extract(events_persisted.payload,'$.data.AppId'),1,1) is 'W'	-- Windows Application x32/x64
 	then upper(substr(json_extract(events_persisted.payload,'$.data.AppId'),3,44)) 
-	end as 'Hash', -- unknown
+	end as 'ProgramId', -- Same as the 'ProgramId' in Amcache.hve (Root\InventoryApplicationFile\)
 	
 upper(json_extract(events_persisted.payload,'$.data.AppSessionId')) as 'AppSessionId',
 
