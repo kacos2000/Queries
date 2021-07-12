@@ -17,10 +17,10 @@ json_extract(events_persisted.payload,'$.time') as 'UTC TimeStamp',
 -- Timestamp from json payload
 datetime((timestamp - 116444736000000000)/10000000, 'unixepoch','localtime') as 'Local TimeStamp',
 json_extract(events_persisted.payload,'$.ext.loc.tz') as 'TimeZome',
-json_extract(events_persisted.payload,'$.ext.utc.seq') as 'seq',
+json_extract(events_persisted.payload,'$.ext.utc.seq') as 'seq', -- 
 
 -- events
-json_extract(events_persisted.payload,'$.data.EventSequence') as 'EventSequence',
+json_extract(events_persisted.payload,'$.data.EventSequence') as 'EventSequence', -- AppInteractivity% specific
 json_extract(events_persisted.payload,'$.data.AggregationStartTime') as 'AggregationStartTime', -- Start date and time of AppInteractivity aggregation
 time(json_extract(events_persisted.payload,'$.data.AggregationDurationMS'),'unixepoch') as 'AggregationDuration', -- Actual duration of aggregation period (in milliseconds)
 -- App name
@@ -100,7 +100,5 @@ where
 -- include events:
   events_persisted.full_event_name in ('Win32kTraceLogging.AppInteractivity','Win32kTraceLogging.AppInteractivitySummary' )
 
-
-  
- -- Sort by date descending (newest first)
-order by events_persisted.timestamp desc
+ -- Sort by event sequence number descending (newest first)
+order by cast(seq as integer) desc
