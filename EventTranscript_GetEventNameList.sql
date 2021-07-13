@@ -1,4 +1,4 @@
--- List unigue Event Names from
+-- List unique Event Names from
 -- from C:\ProgramData\Microsoft\Diagnosis\EventTranscript\EventTranscript.db
 
 SELECT
