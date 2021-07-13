@@ -79,5 +79,6 @@
             - [Device Census (settings)](https://github.com/kacos2000/Queries/blob/master/Census.sql) <br>
             - [DxgKrnlTelemetry Client Running Time](https://github.com/kacos2000/Queries/blob/master/ClientRunningTime.sql) <br>
             - [ProcessLoggingFile & ProcessLoggingRegistry](https://github.com/kacos2000/Queries/blob/master/ProcessLogging.sql) <br>
+            - [FileSystem NTFS,EXFAT,FAT Mount + Volume Info](https://github.com/kacos2000/Queries/blob/master/FileSystem.Mount.sql) <br>
            
 
