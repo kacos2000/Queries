@@ -1,4 +1,4 @@
--- Diagnostic Microsoft.WebBrowser
+-- Diagnostic Microsoft.WebBrowser (Aria)
 -- from C:\ProgramData\Microsoft\Diagnosis\EventTranscript\EventTranscript.db
 -- For more info visit https://github.com/rathbuna/EventTranscript.db-Research
 
@@ -13,6 +13,7 @@ datetime((timestamp - 116444736000000000)/10000000, 'unixepoch','localtime') as 
 json_extract(events_persisted.payload,'$.ext.utc.seq') as 'seq',
 
 -- Event App & event description
+json_extract(events_persisted.payload,'$.data.EventName') as 'EventName',
 json_extract(events_persisted.payload,'$.ext.app.name') as 'app',
 tag_descriptions.tag_name as 'Description', -- where you'll see these events in MS Diagnostic Data Viewer app
 coalesce(json_extract(events_persisted.payload,'$.data.ShortEventName'),replace(replace(substr(distinct full_event_name,39),'Microsoft.',''),'WebBrowser.HistoryJournal.HJ_','')) as 'event',
@@ -61,6 +62,8 @@ events_persisted.full_event_name not like '%SessionIdCorrelation%' and
 events_persisted.full_event_name not like '%ScopedCriticalTask%' and 
 events_persisted.full_event_name not like '%Assert%' and 
 events_persisted.full_event_name not like '%BrowserInfo%' and 
+events_persisted.full_event_name not like '%15cbbc93e90a4d56bf8d9a29305b8981%' and -- exclude Sticky Notes
+tag_descriptions.tag_name not like '%Device Connectivity and Configuration%' and 
 tag_descriptions.tag_name not like '%Performance%' )
 
 
