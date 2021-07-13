@@ -14,7 +14,7 @@ json_extract(events_persisted.payload,'$.ext.utc.seq') as 'seq',
 
 
 -- Events
-json_extract(events_persisted.payload,'$.data.ProcessId') as 'Event Id',
+json_extract(events_persisted.payload,'$.data.ProcessId') as 'Process Id (Pid)',
 json_extract(events_persisted.payload,'$.data.ProcessName') as 'Process Name',
 --json_extract(events_persisted.payload,'$.ext.app.id') as 'App Id Name',
 
