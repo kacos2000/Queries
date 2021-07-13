@@ -1,4 +1,4 @@
--- Diagnostic DMicrosoft.Windows.Compatibility.Encapsulation
+-- Diagnostic Microsoft.Windows.Compatibility.Encapsulation
 --      ProcessLoggingFile
 --      ProcessLoggingRegistry
 -- from C:\ProgramData\Microsoft\Diagnosis\EventTranscript\EventTranscript.db
@@ -13,14 +13,13 @@ datetime((timestamp - 116444736000000000)/10000000, 'unixepoch','localtime') as 
 json_extract(events_persisted.payload,'$.ext.loc.tz') as 'TimeZome',
 json_extract(events_persisted.payload,'$.ext.utc.seq') as 'seq', 
 
--- Evrnt
+-- Event
 replace( events_persisted.full_event_name,'Microsoft.Windows.Compatibility.Encapsulation.','') as 'Event',
 
 json_extract(events_persisted.payload,'$.data.ExeName') as 'ExeName',
 json_extract(events_persisted.payload,'$.data.IsInstaller') as 'IsInstaller',
 upper(json_extract(events_persisted.payload,'$.data.ProgramId')) as 'ProgramId',
 json_extract(events_persisted.payload,'$.data.pathOps') as 'pathOps',
-
 
 -- Local, MS or AAD account 
 trim(json_extract(events_persisted.payload,'$.ext.user.localId'),'m:') as 'UserId',
