@@ -67,4 +67,6 @@ json_extract(events_persisted.payload,'$.data.InterfaceId') as 'Interface Id'
 
 from events_persisted
 where events_persisted.full_event_name like '%DxgKrnlTelemetry.ClientRunningTime%'
-order by events_persisted.full_event_name asc
+
+ -- Sort by event sequence number descending (newest first)
+order by cast(seq as integer) desc
