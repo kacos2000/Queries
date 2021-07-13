@@ -78,4 +78,4 @@
             - [Device Census (settings)](https://github.com/kacos2000/Queries/blob/master/Census.sql) <br>
             - [DxgKrnlTelemetry Client Running Time](https://github.com/kacos2000/Queries/blob/master/ClientRunningTime.sql) <br>
            
-DxgKrnlTelemetry.ClientRunningTime
+
