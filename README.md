@@ -75,5 +75,5 @@
             - [Windows.Networking](https://github.com/kacos2000/Queries/blob/master/Windows.Networking.sql) <br>
             - [**NetworkingTriage**](https://github.com/kacos2000/Queries/blob/master/NetworkingTriage.sql)  *(includes info from Windows.Networking)*<br>
             - [**AppInteractivity + AppInteractivitySummary**](https://github.com/kacos2000/Queries/blob/master/AppInteractivity.sql)  *(more info [here](https://www.kroll.com/en/insights/publications/cyber/forensically-unpacking-eventtranscript/forensic-quick-wins-with-eventtranscript))*<br>
-            - [Census (settings)](https://github.com/kacos2000/Queries/blob/master/Census.sql) <br>
+            - [Device Census (settings)](https://github.com/kacos2000/Queries/blob/master/Census.sql) <br>
            
