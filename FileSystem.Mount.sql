@@ -37,7 +37,7 @@ case json_extract(events_persisted.payload,'$.data.volumeMountedReadOnly')
 	when true then 'Yes'
 	when false then 'No'
 	end as 'ReadOnly',
-payload,
+
 json_extract(events_persisted.payload,'$.data.volumeFat32') as 'volumeFat32',
 json_extract(events_persisted.payload,'$.data.totalClusters') as 'totalClusters',
 json_extract(events_persisted.payload,'$.data.clusterSizeBytes') as 'clusterSize',
