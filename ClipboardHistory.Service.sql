@@ -72,7 +72,8 @@ where events_persisted.full_event_name in
 'Microsoft.Windows.ClipboardHistory.Service.AddItemActivity',
 'Microsoft.WindowsInternal.ComposableShell.Experiences.SuggestionUI.ClipboardHistoryChangeDetected',
 'Microsoft.WindowsInternal.ComposableShell.Experiences.SuggestionUI.ClipboardUpdateDetected')
--- Sort by date descending (newest first)
-order by events_persisted.timestamp desc
+
+ -- Sort by event sequence number descending (newest first)
+order by cast(seq as integer) desc
 
 
