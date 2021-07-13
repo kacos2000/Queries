@@ -52,4 +52,7 @@ and events_persisted.full_event_name not like 'Microsoft.Windows.MobilityExperie
 and events_persisted.full_event_name not like 'Microsoft.Windows.MobilityExperience.YourPhone.Cdm%'   -- Content delivery diagnostics
 and events_persisted.full_event_name not like 'Microsoft.Windows.MobilityExperience.YourPhone.FullTrustServerCreateFactory%' -- Before sent message
 and events_persisted.full_event_name not like 'Microsoft.Windows.MobilityExperience.YourPhone.AppServiceCanceled%'           -- After sent message
-order by events_persisted.timestamp desc
+
+
+ -- Sort by event datedescending (newest first)
+order by cast(events_persisted.timestamp as integer) desc

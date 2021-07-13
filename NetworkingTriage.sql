@@ -123,5 +123,7 @@ and events_persisted.full_event_name not like '%MediaConnected%'
 and events_persisted.full_event_name not like '%DhcpSetEventInRenewState%'
 and events_persisted.full_event_name not like '%SolicitAttempt%'
 and events_persisted.full_event_name not like '%InterfaceCapabilityChangedEvent%'
--- Sort by date descending (newest first)
-order by events_persisted.timestamp desc
+
+
+ -- Sort by event datedescending (newest first)
+order by cast(events_persisted.timestamp as integer) desc

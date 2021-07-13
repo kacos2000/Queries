@@ -67,6 +67,5 @@ tag_descriptions.tag_name not like '%Device Connectivity and Configuration%' and
 tag_descriptions.tag_name not like '%Performance%' )
 
 
-
- -- Sort by event sequence number descending (newest first)
-order by cast(seq as integer) desc
+ -- Sort by event datedescending (newest first)
+order by cast(events_persisted.timestamp as integer) desc

@@ -5,7 +5,6 @@
 -- from C:\ProgramData\Microsoft\Diagnosis\EventTranscript\EventTranscript.db
 -- For more info visit https://github.com/rathbuna/EventTranscript.db-Research 
 -- https://docs.microsoft.com/en-us/windows/privacy/enhanced-diagnostic-data-windows-analytics-events-and-fields
--- https://arxiv.org/ftp/arxiv/papers/2002/2002.12506.pdf
 -- and "Forensic Quick Wins With EventTranscript.DB: Win32kTraceLogging" at
 -- https://www.kroll.com/en/insights/publications/cyber/forensically-unpacking-eventtranscript/forensic-quick-wins-with-eventtranscript
 
@@ -17,11 +16,11 @@ json_extract(events_persisted.payload,'$.time') as 'UTC TimeStamp',
 -- Timestamp from json payload
 datetime((timestamp - 116444736000000000)/10000000, 'unixepoch','localtime') as 'Local TimeStamp',
 json_extract(events_persisted.payload,'$.ext.loc.tz') as 'TimeZome',
-json_extract(events_persisted.payload,'$.ext.utc.seq') as 'seq', -- 
+json_extract(events_persisted.payload,'$.ext.utc.seq') as 'seq', 
 
 -- events
 json_extract(events_persisted.payload,'$.data.EventSequence') as 'EventSequence', -- AppInteractivity% specific
-json_extract(events_persisted.payload,'$.data.AggregationStartTime') as 'AggregationStartTime', -- Start date and time of AppInteractivity aggregation
+json_extract(events_persisted.payload,'$.data.AggregationStartTime') as 'AggregationStartTime (UTC)', -- Start date and time of AppInteractivity aggregation
 time(json_extract(events_persisted.payload,'$.data.AggregationDurationMS'),'unixepoch') as 'AggregationDuration', -- Actual duration of aggregation period (in milliseconds)
 -- App name
 case when substr(json_extract(events_persisted.payload,'$.data.AppId'),1,1) is 'W' -- Windows Application x32/x64
@@ -92,13 +91,16 @@ trim(json_extract(events_persisted.payload,'$.ext.user.localId'),'m:') as 'UserI
 sid as 'User SID',
 
 
+tag_descriptions.tag_name, -- where you'll see these events in MS Diagnostic Data Viewer app
 logging_binary_name
 
 
 from events_persisted 
+join event_tags on events_persisted.full_event_name_hash = event_tags.full_event_name_hash
+join tag_descriptions on event_tags.tag_id = tag_descriptions.tag_id 
 where 
 -- include events:
   events_persisted.full_event_name in ('Win32kTraceLogging.AppInteractivity','Win32kTraceLogging.AppInteractivitySummary' )
 
- -- Sort by event sequence number descending (newest first)
-order by cast(seq as integer) desc
+ -- Sort by event datedescending (newest first)
+order by cast(events_persisted.timestamp as integer) desc

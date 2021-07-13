@@ -38,5 +38,6 @@ where
   events_persisted.full_event_name like 'Census%' 
 
   
- -- Sort by event sequence number descending (newest first)
-order by cast(seq as integer) desc
+
+ -- Sort by event datedescending (newest first)
+order by cast(events_persisted.timestamp as integer) desc
