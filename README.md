@@ -78,5 +78,6 @@
             - [**AppInteractivity + AppInteractivitySummary**](https://github.com/kacos2000/Queries/blob/master/AppInteractivity.sql)  *(more info [here](https://www.kroll.com/en/insights/publications/cyber/forensically-unpacking-eventtranscript/forensic-quick-wins-with-eventtranscript))*<br>
             - [Device Census (settings)](https://github.com/kacos2000/Queries/blob/master/Census.sql) <br>
             - [DxgKrnlTelemetry Client Running Time](https://github.com/kacos2000/Queries/blob/master/ClientRunningTime.sql) <br>
+            - [ProcessLoggingFile & ProcessLoggingRegistry](https://github.com/kacos2000/Queries/blob/master/ProcessLogging.sql) <br>
            
 
