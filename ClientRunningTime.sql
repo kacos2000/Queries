@@ -57,16 +57,22 @@ case when substr(json_extract(events_persisted.payload,'$.ext.app.id'),1,1) is '
 -- Version of the application that produced this event	
 case when substr(json_extract(events_persisted.payload,'$.ext.app.id'),1,1) is 'W' -- Windows Application x32/x64
 	then upper(substr(json_extract(events_persisted.payload,'$.ext.app.id'),3,44 )) 
-	end as 'ProgramId',   --  -- Same as the 'ProgramId' in Amcache.hve (Root\InventoryApplicationFile\)	
+	end as 'ProgramId',   -- Same as the 'ProgramId' in Amcache.hve (Root\InventoryApplicationFile\)	
 
 -- Tracking
 json_extract(events_persisted.payload,'$.data.AppSessionGuid') as 'AppSession Guid',	
 
 -- InterfaceId info
-json_extract(events_persisted.payload,'$.data.InterfaceId') as 'Interface Id'
+json_extract(events_persisted.payload,'$.data.InterfaceId') as 'Interface Id',
+
+-- Local, MS or AAD account 
+trim(json_extract(events_persisted.payload,'$.ext.user.localId'),'m:') as 'UserId',
+sid as 'User SID',
+
+logging_binary_name
 
 from events_persisted
 where events_persisted.full_event_name like '%DxgKrnlTelemetry.ClientRunningTime%'
 
- -- Sort by event datedescending (newest first)
+ -- Sort by event date dscending (newest first)
 order by cast(events_persisted.timestamp as integer) desc
