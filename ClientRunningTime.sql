@@ -32,7 +32,7 @@ case when substr(json_extract(events_persisted.payload,'$.ext.app.id'),1,1) is '
 
 json_extract(events_persisted.payload,'$.data.VmProcessName') as 'VM Process Name',
 json_extract(events_persisted.payload,'$.data.Client') as 'Client',
-time(json_extract(events_persisted.payload,'$.data.RunningTime100ns')/10000,'unixepoch') as 'RunningTime(100ns)',
+time(json_extract(events_persisted.payload,'$.data.RunningTime100ns')/10000,'unixepoch')||" ("||json_extract(events_persisted.payload,'$.data.RunningTime100ns')||")" as 'RunningTime (100ns)',
 
 -- Process type (if set)
 case json_extract(events_persisted.payload,'$.data.IsLinuxProcess')
