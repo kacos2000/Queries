@@ -67,20 +67,25 @@
 
       - **Windows 10/11 diagnostics stuff**  
   *from 'C:\ProgramData\Microsoft\Diagnosis\EventTranscript\EventTranscript.db' ([more info here](https://github.com/rathbuna/EventTranscript.db-Research))*  
-            - [List unigue Event Names in the dB](https://github.com/kacos2000/Queries/blob/master/EventTranscript_GetEventNameList.sql) <br>
-            - *Sample event name [list (csv)](https://github.com/kacos2000/Queries/blob/master/full_event_names.csv) with 2800+ names compiled from [Win10](https://github.com/kacos2000/Queries/blob/master/full_event_names1.csv) & [Win11](https://github.com/kacos2000/Queries/blob/master/full_event_names2.csv) csv's* <br>
-            - [ClipboardHistory](https://github.com/kacos2000/Queries/blob/master/ClipboardHistory.Service.sql) <br>
-            - [SoftwareUpdateClientTelemetry](https://github.com/kacos2000/Queries/blob/master/SoftwareUpdateClientTelemetry.sql) <br> 
-            - [Edge & Apps WebHistory](https://github.com/kacos2000/Queries/blob/master/Microsoft.WebBrowser.sql) <br> 
-            - [Virtual Desktop](https://github.com/kacos2000/Queries/blob/master/VirtualDesktop.sql) <br>
-            - [YourPhone app](https://github.com/kacos2000/Queries/blob/master/MobilityExperience.YourPhone.sql) <br>
-            - [Windows.Networking](https://github.com/kacos2000/Queries/blob/master/Windows.Networking.sql) <br>
-            - [**NetworkingTriage**](https://github.com/kacos2000/Queries/blob/master/NetworkingTriage.sql)  *(includes info from Windows.Networking)*<br>
-            - [**AppInteractivity + AppInteractivitySummary**](https://github.com/kacos2000/Queries/blob/master/AppInteractivity.sql)  *(more info [here](https://www.kroll.com/en/insights/publications/cyber/forensically-unpacking-eventtranscript/forensic-quick-wins-with-eventtranscript))*<br>
-            - [Device Census (settings)](https://github.com/kacos2000/Queries/blob/master/Census.sql) <br>
-            - [DxgKrnlTelemetry Client Running Time](https://github.com/kacos2000/Queries/blob/master/ClientRunningTime.sql) <br>
-            - [AppStateChangeSummary](https://github.com/kacos2000/Queries/blob/master/AppStateChangeSummary.sqll) <br>
-            - [ProcessLoggingFile & ProcessLoggingRegistry](https://github.com/kacos2000/Queries/blob/master/ProcessLogging.sql) <br>
-            - [FileSystem NTFS,EXFAT,FAT Mount + Volume Info](https://github.com/kacos2000/Queries/blob/master/FileSystem.Mount.sql) <br>
+        - [ClipboardHistory](https://github.com/kacos2000/Queries/blob/master/ClipboardHistory.Service.sql) <br>
+        - [SoftwareUpdateClientTelemetry](https://github.com/kacos2000/Queries/blob/master/SoftwareUpdateClientTelemetry.sql) <br> 
+        - [Edge & Apps WebHistory](https://github.com/kacos2000/Queries/blob/master/Microsoft.WebBrowser.sql) <br> 
+        - [Virtual Desktop](https://github.com/kacos2000/Queries/blob/master/VirtualDesktop.sql) <br>
+        - [YourPhone app](https://github.com/kacos2000/Queries/blob/master/MobilityExperience.YourPhone.sql) <br>
+        - [Windows.Networking](https://github.com/kacos2000/Queries/blob/master/Windows.Networking.sql) <br>
+        - [**NetworkingTriage**](https://github.com/kacos2000/Queries/blob/master/NetworkingTriage.sql)  *(includes info from Windows.Networking)*<br>
+        - [**AppInteractivity + AppInteractivitySummary**](https://github.com/kacos2000/Queries/blob/master/AppInteractivity.sql)  *(more info [here](https://www.kroll.com/en/insights/publications/cyber/forensically-unpacking-eventtranscript/forensic-quick-wins-with-eventtranscript))*<br>
+        - [Device Census (settings)](https://github.com/kacos2000/Queries/blob/master/Census.sql) <br>
+        - [DxgKrnlTelemetry Client Running Time](https://github.com/kacos2000/Queries/blob/master/ClientRunningTime.sql) <br>
+        - [AppStateChangeSummary](https://github.com/kacos2000/Queries/blob/master/AppStateChangeSummary.sqll) <br>
+        - [ProcessLoggingFile & ProcessLoggingRegistry](https://github.com/kacos2000/Queries/blob/master/ProcessLogging.sql) <br>
+        - [FileSystem NTFS,EXFAT,FAT Mount + Volume Info](https://github.com/kacos2000/Queries/blob/master/FileSystem.Mount.sql) <br>
+        - ----------
+        - [List unigue Event Names in the dB](https://github.com/kacos2000/Queries/blob/master/EventTranscript_GetEventNameList.sql) <br>
+        - *Sample event name lists: <br> 
+           1. [(csv1 with 3400+)](https://github.com/kacos2000/Queries/blob/master/full_event_names_large.csv) names <br> 
+           2. [(csv2 with 2800+)](https://github.com/kacos2000/Queries/blob/master/full_event_names.csv) names compiled from <br> 
+              2a. [Win10 csv](https://github.com/kacos2000/Queries/blob/master/full_event_names1.csv) & <br> 
+              2b. [Win11 csv (VM)](https://github.com/kacos2000/Queries/blob/master/full_event_names2.csv) csv's* <br>
            
 
