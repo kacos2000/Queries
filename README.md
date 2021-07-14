@@ -82,7 +82,7 @@
         - [FileSystem NTFS,EXFAT,FAT Mount + Volume Info](https://github.com/kacos2000/Queries/blob/master/FileSystem.Mount.sql) <br>
         - ----------
         - [List unigue Event Names in the dB](https://github.com/kacos2000/Queries/blob/master/EventTranscript_GetEventNameList.sql) <br>
-        - *Sample event name lists: <br> 
+        - *Sample event name lists:* <br> 
            1. [(csv1 with 3400+)](https://github.com/kacos2000/Queries/blob/master/full_event_names_large.csv) names <br> 
            2. [(csv2 with 2800+)](https://github.com/kacos2000/Queries/blob/master/full_event_names.csv) names compiled from <br> 
               2a. [Win10 csv](https://github.com/kacos2000/Queries/blob/master/full_event_names1.csv) & <br> 
