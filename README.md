@@ -65,7 +65,7 @@
  	          - [Samsung Flow App 'Notifications.db'](https://github.com/kacos2000/queries/blob/master/Samsung_Flow_Notifications_db.sql) - *Note:* dB Files are EFS encrypted <br>
             - [Encapsulation.db](https://github.com/kacos2000/Queries/blob/master/Encapsulationdb.sql) found at 'C:\Windows\appcompat\encapsulation\Encapsulation.db' <br> 
 
-      - **Windows 10 diagnostics stuff**  
+      - **Windows 10/11 diagnostics stuff**  
   *from 'C:\ProgramData\Microsoft\Diagnosis\EventTranscript\EventTranscript.db' ([more info here](https://github.com/rathbuna/EventTranscript.db-Research))*  
             - [List unigue Event Names in the dB](https://github.com/kacos2000/Queries/blob/master/EventTranscript_GetEventNameList.sql) <br>
             - *Sample [list (csv)](https://github.com/kacos2000/Queries/blob/master/full_event_names.csv) with 2800+ event names* <br>
