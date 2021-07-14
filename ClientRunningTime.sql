@@ -50,11 +50,11 @@ case json_extract(events_persisted.payload,'$.data.IsWslProcess')
 	
 -- SHA1 Hash of the application that produced this event	
 case when substr(json_extract(events_persisted.payload,'$.ext.app.id'),1,1) is 'W' -- Windows Application x32/x64
-	then upper(substr(json_extract(events_persisted.payload,'$.ext.app.id'),52,44 ))
+	then upper(substr(json_extract(events_persisted.payload,'$.ext.app.id'),52,40 ))
 	-- Same as the 'FileId' in Amcache.hve (Root\InventoryApplicationFile\)
 	end as 'SHA1',	-- (SHA1 Base16) checked & verified 
 
--- Version of the application that produced this event	
+-- ProgramId of the application that produced this event	
 case when substr(json_extract(events_persisted.payload,'$.ext.app.id'),1,1) is 'W' -- Windows Application x32/x64
 	then upper(substr(json_extract(events_persisted.payload,'$.ext.app.id'),3,44 )) 
 	end as 'ProgramId',   -- Same as the 'ProgramId' in Amcache.hve (Root\InventoryApplicationFile\)	
