@@ -86,7 +86,7 @@
            1. [(csv1 with 3400+)](https://github.com/kacos2000/Queries/blob/master/full_event_names_large.csv) names <br> 
            2. [(csv2 with 2800+)](https://github.com/kacos2000/Queries/blob/master/full_event_names.csv) names compiled from <br> 
               2a. [Win10 csv](https://github.com/kacos2000/Queries/blob/master/full_event_names1.csv) & <br> 
-              2b. [Win11 csv (VM)](https://github.com/kacos2000/Queries/blob/master/full_event_names2.csv) csv's* <br>
+              2b. [Win11 csv (VM)](https://github.com/kacos2000/Queries/blob/master/full_event_names2.csv) <br>
            
 `*` Adjust settings:
 `HKLM: SOFTWARE\Microsoft\Windows\CurrentVersion\Diagnostics\DiagTrack\EventTranscriptKey`
