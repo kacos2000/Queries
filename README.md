@@ -66,7 +66,7 @@
             - [Encapsulation.db](https://github.com/kacos2000/Queries/blob/master/Encapsulationdb.sql) found at 'C:\Windows\appcompat\encapsulation\Encapsulation.db' <br> 
 
       - **Windows 10/11 diagnostics stuff**  
-  *from 'C:\ProgramData\Microsoft\Diagnosis\EventTranscript\EventTranscript.db' ([more info here](https://github.com/rathbuna/EventTranscript.db-Research))*  
+  *from 'C:\ProgramData\Microsoft\Diagnosis\EventTranscript\EventTranscript.db'`*` ([more info here](https://github.com/rathbuna/EventTranscript.db-Research))*  
         - [ClipboardHistory](https://github.com/kacos2000/Queries/blob/master/ClipboardHistory.Service.sql) <br>
         - [SoftwareUpdateClientTelemetry](https://github.com/kacos2000/Queries/blob/master/SoftwareUpdateClientTelemetry.sql) <br> 
         - [Edge & Apps WebHistory](https://github.com/kacos2000/Queries/blob/master/Microsoft.WebBrowser.sql) <br> 
@@ -88,4 +88,9 @@
               2a. [Win10 csv](https://github.com/kacos2000/Queries/blob/master/full_event_names1.csv) & <br> 
               2b. [Win11 csv (VM)](https://github.com/kacos2000/Queries/blob/master/full_event_names2.csv) csv's* <br>
            
-
+`*` Adjust settings:
+`HKLM: SOFTWARE\Microsoft\Windows\CurrentVersion\Diagnostics\DiagTrack\EventTranscriptKey`
+   - DWORD `EnableEventTranscript` *(0: disabled, 1: enabled)*
+   - DWORD `HoursOfHistoryToKeep` *(in hours)*
+   - DWORD `MaxStoreSize` *(nr of bytes)*
+   - DWORD `RequestedMaxStoreSize` *(nr of bytes, same as above)*
