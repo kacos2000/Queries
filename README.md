@@ -80,6 +80,7 @@
         - [AppStateChangeSummary](https://github.com/kacos2000/Queries/blob/master/AppStateChangeSummary.sql) <br>
         - [ProcessLoggingFile & ProcessLoggingRegistry](https://github.com/kacos2000/Queries/blob/master/ProcessLogging.sql) <br>
         - [FileSystem NTFS,EXFAT,FAT Mount + Volume Info](https://github.com/kacos2000/Queries/blob/master/FileSystem.Mount.sql) <br>
+        - [TextInputSessions](https://github.com/kacos2000/Queries/blob/master/Text-InputSession.sql) <br>
         - ----------
         - [List unigue Event Names in the dB](https://github.com/kacos2000/Queries/blob/master/EventTranscript_GetEventNameList.sql) <br>
         - *Sample event name lists:* <br> 
