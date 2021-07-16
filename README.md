@@ -80,6 +80,7 @@
         - [AppStateChangeSummary](https://github.com/kacos2000/Queries/blob/master/AppStateChangeSummary.sql) <br>
         - [ProcessLoggingFile & ProcessLoggingRegistry](https://github.com/kacos2000/Queries/blob/master/ProcessLogging.sql) <br>
         - [FileSystem NTFS,EXFAT,FAT Mount + Volume Info](https://github.com/kacos2000/Queries/blob/master/FileSystem.Mount.sql) <br>
+        - [Microsoft.Windows.Inventory.Core.Install](https://github.com/kacos2000/Queries/blob/master/Inventory.sql) *(installation [state](https://docs.microsoft.com/en-us/windows/privacy/basic-level-windows-diagnostic-events-and-fields-1709#microsoftwindowsinventorycoreinventoryapplicationadd) for all hardware and software components). <br>
         - [TextInputSessions](https://github.com/kacos2000/Queries/blob/master/Text-InputSession.sql) <br>
         - ----------
         - [List unigue Event Names in the dB](https://github.com/kacos2000/Queries/blob/master/EventTranscript_GetEventNameList.sql) <br>
