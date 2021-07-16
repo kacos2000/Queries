@@ -30,17 +30,17 @@
              - [Sample Output (csv)](https://github.com/kacos2000/queries/blob/master/cache_db.csv)<br><br>
 
 
-       - **Google Drive**   <br>     
+      - **Google Drive**   <br>     
            - Query Google Drive's [snapshot.db](https://github.com/kacos2000/queries/blob/master/GDrive_snapshot.sql) found at the '\AppData\Local\Google\Drive\user@' folder  .<br>
             - Query Google Drive's [cloud_graph.db](https://github.com/kacos2000/queries/blob/master/GDrive_cloudgraph.sql) found at the '\AppData\Local\Google\Drive\user@\cloud_graph' folder <br><br>
              
-       - **Android**   <br>     
+      - **Android**   <br>     
             - [Android 7 Calllog.db (Call history)](https://github.com/kacos2000/queries/blob/master/calllog_db.sql)<br>
             - [Android 7 Contacts2.db (Contacts)](https://github.com/kacos2000/queries/blob/master/contacts2.sql)<br>
             - [Android 9 Contacts2.db (Call history)](https://github.com/kacos2000/queries/blob/master/contacts2calls.sql)<br>
             - [Android logs.db (Samsung Calls/messages)](https://github.com/kacos2000/queries/blob/master/logs_db.sql)<br><br>
                    
-       - **IOS**     <br>     
+      - **IOS**     <br>     
             - [IOS 'Accounts3.sqlite' (Accounts)](https://github.com/kacos2000/queries/blob/master/Accounts3_sqlite.sql)<br>
             - [IOS 'calendar.sqlitedb' (Calendar)](https://github.com/kacos2000/queries/blob/master/calendar_sqlitedb.sql)<br>
             - [IOS 'Extras.db' (Calendar)](https://github.com/kacos2000/queries/blob/master/calendar_extras.sql)<br>
@@ -60,8 +60,8 @@
             - [Hike Sticker Chat (com.bsb.hike)](https://github.com/kacos2000/queries/blob/master/bsb_hike_messagesDB_sqlite.sql)<br>
             - ['contacts.data' (Viber Messages)](https://github.com/kacos2000/queries/blob/master/Viber_Contacts_Data_messages.sql)<br> 
             - ['ChatStorage.sqlite' (WhatsApp Messages)](https://github.com/kacos2000/queries/blob/master/WhatsApp_Chatstorage_sqlite.sql)<br> 
-            
- 	   - **Windows 10**     <br>   	 
+ 
+      - **Windows 10**     <br>   	 
  	          - [Samsung Flow App 'Notifications.db'](https://github.com/kacos2000/queries/blob/master/Samsung_Flow_Notifications_db.sql) - *Note:* dB Files are EFS encrypted <br>
             - [Encapsulation.db](https://github.com/kacos2000/Queries/blob/master/Encapsulationdb.sql) found at 'C:\Windows\appcompat\encapsulation\Encapsulation.db' <br> 
 
