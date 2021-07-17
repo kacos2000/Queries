@@ -22,7 +22,6 @@ case json_extract(events_persisted.payload,'$.data.IsRetryable')
 -- json_extract(events_persisted.payload,'$.data.wilActivity.hresult') as 'hresult',
 
 -- info
-events_persisted.payload,
 case json_extract(events_persisted.payload,'$.data.signalType') 
 	when 0 then 'Copy ('||json_extract(events_persisted.payload,'$.data.signalType')||')'
 	when 1 then 'Paste ('||json_extract(events_persisted.payload,'$.data.signalType')||')'
