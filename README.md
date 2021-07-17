@@ -68,6 +68,7 @@
       - **Windows 10/11 diagnostics stuff**  
   *from `C:\ProgramData\Microsoft\Diagnosis\EventTranscript\EventTranscript.db` '`(*)` ([more info here](https://github.com/rathbuna/EventTranscript.db-Research))*  
         - [ClipboardHistory](https://github.com/kacos2000/Queries/blob/master/ClipboardHistory.Service.sql) <br>
+        - [TaskFlow DataEngine](https://github.com/kacos2000/Queries/blob/master/TaskFlow.sql) <br>
         - [SoftwareUpdateClientTelemetry](https://github.com/kacos2000/Queries/blob/master/SoftwareUpdateClientTelemetry.sql) <br> 
         - [Edge & Apps WebHistory](https://github.com/kacos2000/Queries/blob/master/Microsoft.WebBrowser.sql) <br> 
         - [Virtual Desktop](https://github.com/kacos2000/Queries/blob/master/VirtualDesktop.sql) <br>
