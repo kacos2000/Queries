@@ -84,6 +84,7 @@
         - [Microsoft.Windows.Inventory.Core.Install](https://github.com/kacos2000/Queries/blob/master/Inventory.sql) *(installation [state](https://docs.microsoft.com/en-us/windows/privacy/basic-level-windows-diagnostic-events-and-fields-1709#microsoftwindowsinventorycoreinventoryapplicationadd) for all hardware and software components).* <br>
         - [TextInputSessions](https://github.com/kacos2000/Queries/blob/master/Text-InputSession.sql) <br>
         - [Immersive-Shell](https://github.com/kacos2000/Queries/blob/master/Immersive-Shell.sql) <br>
+        - [User Account Controls (UAC)](https://github.com/kacos2000/Queries/blob/master/UAC.sql) <br>
         - ----------
         - [List unigue Event Names in the dB](https://github.com/kacos2000/Queries/blob/master/EventTranscript_GetEventNameList.sql) <br>
         - *Sample event name lists:* <br> 
@@ -91,7 +92,8 @@
            2. [(csv2 with 2800+)](https://github.com/kacos2000/Queries/blob/master/full_event_names.csv) names compiled from <br> 
               2a. [Win10 csv](https://github.com/kacos2000/Queries/blob/master/full_event_names1.csv) & <br> 
               2b. [Win11 csv (VM)](https://github.com/kacos2000/Queries/blob/master/full_event_names2.csv) <br>
-           
+        - *[Event Tracing GUID + Provider name list](https://github.com/kacos2000/Queries/blob/master/providers.txt)*  <br> 
+
 `(*)` Adjust settings:
 `HKLM: SOFTWARE\Microsoft\Windows\CurrentVersion\Diagnostics\DiagTrack\EventTranscriptKey`
    - DWORD `EnableEventTranscript` *(0: disabled, 1: enabled)*
