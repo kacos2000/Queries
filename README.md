@@ -100,3 +100,9 @@
    - DWORD `HoursOfHistoryToKeep` *(in hours)*
    - DWORD `MaxStoreSize` *(nr of bytes)*
    - DWORD `RequestedMaxStoreSize` *(nr of bytes, same as above)*
+   <br><br>
+
+
+      - **Windows 11 Search data** *(new 22H2+ SQLite3 dBs)*<br>
+        *found at 'C:\ProgramData\Microsoft\Search\Data\Applications\Windows'*<br>
+        - [SystemIndex_1_PropertyStore query](https://github.com/kacos2000/Queries/blob/master/Win_Search_PropertyStore.sql)
