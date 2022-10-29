@@ -107,3 +107,4 @@
         *found at 'C:\ProgramData\Microsoft\Search\Data\Applications\Windows'*<br>
         - [Paths (SystemIndex_1_PropertyStore) query](https://github.com/kacos2000/Queries/blob/master/Win_Search_PropertyStore.sql)
         - [SecurityDescriptor (SecStore.db) query](https://github.com/kacos2000/Queries/blob/master/Win_Search_SecStore.sql)
+        - [Paths/Files & Timestamps (Windows-gather.db)](https://github.com/kacos2000/Queries/blob/master/Win_Search_gatherdB.sql)
