@@ -2,8 +2,8 @@
 -- of the new Win 11 search databases (Windows-gather.db)
 -- Table SystemIndex_GthrPth holds the main paths & Scope/Parent IDs linked to
 -- the table SystemIndex_Gthr ScopeIDs.
--- The SystemIndex_Gthr table's DocumentIDs link the entries to the Information on
--- the entry stored in the 'SystemIndex_1_PropertyStore' table on
+-- The SystemIndex_Gthr table's 'DocumentID's link the entries to the Information on
+-- the entry stored in the 'SystemIndex_1_PropertyStore' table and 'WorkID' field on
 -- the separate SQLite dB 'Windows.db' in the same file location.
 --
 -- Database location:
