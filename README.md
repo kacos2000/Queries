@@ -93,7 +93,9 @@
               2a. [Win10 csv](https://github.com/kacos2000/Queries/blob/master/full_event_names1.csv) & <br> 
               2b. [Win11 csv (VM)](https://github.com/kacos2000/Queries/blob/master/full_event_names2.csv) <br>
         - *[Event Tracing GUID + Provider name list](https://github.com/kacos2000/Queries/blob/master/providers.txt)*  <br> 
-
+        - *(Related event log: 'Microsoft-Windows-UniversalTelemetryClient%4Operational.evtx')*
+        - ----------
+        
 `(*)` Adjust settings:
 `HKLM: SOFTWARE\Microsoft\Windows\CurrentVersion\Diagnostics\DiagTrack\EventTranscriptKey`
    - DWORD `EnableEventTranscript` *(0: disabled, 1: enabled)*
